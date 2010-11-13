@@ -28,4 +28,4 @@
     (add-hook 'comint-output-filter-functions 'comint-strip-ctrl-m)))
 
 (load (concat emacs-root "site-lisp/cygwin-mount"))
-(load (concat emacs-root "site-lisp/setup-cygwin"))
+(load (concat emacs-root "site-lisp/cygwin-setup"))

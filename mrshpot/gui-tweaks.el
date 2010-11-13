@@ -35,11 +35,14 @@
   (cond
    ; zenburn
    ((eq my-theme 'zenburn)
-    (load-library "color-theme-zenburn")
+    (load-library
+	 (if (eq system-type 'windows-nt)
+		 "color-themes/zenburn-updated"
+	   "color-themes/color-theme-zenburn"))
     (color-theme-zenburn))
    ;; tangotango, doesn't work
    ((eq my-theme 'tangotango)
-    (load-library "color-theme-tangotango")
+    (load-library "color-themes/color-theme-tangotango")
     (setq color-theme-is-global t)
     (setq color-theme-is-cumulative t)
     (setq color-theme-load-all-themes nil)
@@ -50,10 +53,10 @@
     (add-hook 'gnus-article-mode-hook 'color-theme-tangotango))
    ;; gruber-darker
    ((eq my-theme 'gruber-darker)
-    (load-library "color-theme-gruber-darker")
+    (load-library "color-themes/color-theme-gruber-darker")
     (color-theme-gruber-darker))
    ;; almost-monokai
    ((eq my-theme 'almost-monokai)
-    (load-library "color-theme-almost-monokai")
+    (load-library "color-themes/color-theme-almost-monokai")
     (color-theme-almost-monokai))))
 
