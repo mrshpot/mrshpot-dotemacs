@@ -29,62 +29,66 @@
 				(setq tab-width 4)
 				(setq indent-tabs-mode t)))
 
-
 ;; IDO, Interactively Do Things
 ;; for nicer autocompletion in minibuffer
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+(require 'info)
+(add-to-list 'Info-additional-directory-list
+			 (concat emacs-root "info"))
 
-;;; SuperCollider
-(require 'sclang)
+;; TODO: actually check for package presence
+(when (equal system-name "mariachi")
+  ;; SuperCollider
+  (require 'sclang)
 
-;;; EMMS
-(require 'emms-setup)
-(emms-standard)
-(emms-default-players)
+  ;; EMMS
+  (require 'emms-setup)
+  (emms-standard)
+  (emms-default-players)
 
-;;; W3M pager browser
-(require 'w3m)
-(setq browse-url-browser-function 'w3m-browse-url)
+  ;; W3M pager browser
+  (require 'w3m)
+  (setq browse-url-browser-function 'w3m-browse-url)
 
-;;; emacs-jabber
-(require 'jabber)
+  ;; emacs-jabber
+  (require 'jabber)
 
-;;; CMake
-(require 'cmake-mode)
+  ;; CMake
+  (require 'cmake-mode)
 
-;;; OCaml
-(setq auto-mode-alist
-          (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
-(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
-(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
-(if window-system (require 'caml-font))
+  ;; OCaml
+  (setq auto-mode-alist
+		(cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
+  (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
+  (autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
+  (if window-system (require 'caml-font))
 
-;;; PHP
-(autoload 'php-mode "php-mode.el" "PHP mode." t)
-(setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
+  ;; PHP
+  (autoload 'php-mode "php-mode.el" "PHP mode." t)
+  (setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
 
-;;; Clojure
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/clojure-mode")
-(require 'clojure-mode)
+  ;; Clojure
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/clojure-mode")
+  (require 'clojure-mode)
 
-;;; SLIME with SBCL
-(setq inferior-lisp-program "/usr/bin/sbcl")
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
-(require 'slime)
-(slime-setup)
+  ;; SLIME with SBCL
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+  (require 'slime)
+  (slime-setup)
 
-;;; Arch Linux PKGBUILD mode
-(autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
-(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
+  ;; Arch Linux PKGBUILD mode
+  (autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
+  (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist)))
 
 ; CUDA
 (require 'cuda-mode)
 (setq auto-mode-alist (append '(("/*.\.cuh$" . cuda-mode)) auto-mode-alist))
 
-;;; CEDET
+;; CEDET
 (load "my-cedet.el")
 
 (provide 'mode-customization)
