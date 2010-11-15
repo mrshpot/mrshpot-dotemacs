@@ -9,7 +9,7 @@
   (if (or (eq system-type 'gnu/linux)
 	  (eq system-type 'linux)
 	  (eq system-type 'cygwin))
-      "/home/mrshpot/emacs/"
+      (format "/home/%s/emacs/" (getenv "USER"))
     "D:/emacs/"))
 
 (labels ((add-path (p)
@@ -19,8 +19,7 @@
   (add-path "mrshpot/mode-customization")
   (add-path "site-lisp")
   (add-path "site-lisp/color-theme"))
-
-(setq warning-suppress-types nil)
+(setf warning-suppress-types nil)
 
 ; mrshpot
 (require 'mrshpot)
