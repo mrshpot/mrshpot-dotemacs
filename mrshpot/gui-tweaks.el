@@ -35,10 +35,7 @@
   (cond
    ; zenburn
    ((eq my-theme 'zenburn)
-    (load-library
-	 (if (eq system-type 'windows-nt)
-		 "color-themes/zenburn-updated"
-	   "color-themes/color-theme-zenburn"))
+    (load-library "color-themes/zenburn")
     (color-theme-zenburn))
    ;; tangotango, doesn't work
    ((eq my-theme 'tangotango)
