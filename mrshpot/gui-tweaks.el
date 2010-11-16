@@ -16,8 +16,8 @@
   (global-font-lock-mode t))
 
 ;; turn off gui stuff I don't use anyway
-(tool-bar-mode nil)
-(menu-bar-mode nil)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
 
 ;; nicer frame titles
 (setf frame-title-format
