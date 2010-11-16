@@ -19,12 +19,12 @@
 (tool-bar-mode nil)
 (menu-bar-mode nil)
 
-(when (or (eq system-type 'gnu/linux)
-	  (eq system-type 'linux)
-	  (eq system-type 'cygwin))
-  ;; nicer frame titles
-  (setq frame-title-format
-	(concat  "%b - " (getenv "USER") "@" (system-name))))
+;; nicer frame titles
+(setf frame-title-format
+	  (concat "%b - "
+			  (or (getenv "USER")
+				  (getenv "USERNAME"))
+			  "@" (system-name)))
 
 ;; Color Theme
 ;; right now there seems to be a problem with my color themes.
