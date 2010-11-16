@@ -66,6 +66,12 @@
   (autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
   (if window-system (require 'caml-font))
 
+  ;; Haskell
+  (require 'haskell-mode)
+  (require 'inf-haskell)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+  (add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode))
+
   ;; PHP
   (autoload 'php-mode "php-mode.el" "PHP mode." t)
   (setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
