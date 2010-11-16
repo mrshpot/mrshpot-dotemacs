@@ -39,56 +39,68 @@
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
 
-;; TODO: actually check for package presence
-(when (equal system-name "mariachi")
+
+;; TODO: pull out optional stuff as stand-alone site-lisp packages
+(labels
+	((optional-require (feature)
+					   (let ((res (require feature nil t)))
+						 (unless res
+						   (message
+							(format "Could not load optional feature %s. Skipping." feature)))
+						 res)))
   ;; SuperCollider
-  (require 'sclang)
+  (optional-require 'sclang)
 
   ;; EMMS
-  (require 'emms-setup)
-  (emms-standard)
-  (emms-default-players)
+  (when (optional-require 'emms-setup)
+	(emms-standard)
+	(emms-default-players))
 
   ;; W3M pager browser
-  (require 'w3m)
-  (setq browse-url-browser-function 'w3m-browse-url)
+  (when (optional-require 'w3m)
+	(setq browse-url-browser-function 'w3m-browse-url))
 
   ;; emacs-jabber
-  (require 'jabber)
+  (optional-require 'jabber)
 
   ;; CMake
-  (require 'cmake-mode)
+  (optional-require 'cmake-mode)
 
   ;; OCaml
-  (setq auto-mode-alist
-		(cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
-  (autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
-  (autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
-  (if window-system (require 'caml-font))
+  (when (optional-require 'caml)
+	(setq auto-mode-alist
+		  (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
+	(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
+	(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
+	(if window-system (require 'caml-font)))
 
   ;; Haskell
-  (require 'haskell-mode)
-  (require 'inf-haskell)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-  (add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode))
+  (when (optional-require 'haskell-mode)
+	(require 'inf-haskell)
+	(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+	(add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode)))
 
   ;; PHP
-  (autoload 'php-mode "php-mode.el" "PHP mode." t)
-  (setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
-
+  (when (optional-require 'php-mode)
+	(autoload 'php-mode "php-mode.el" "PHP mode." t)
+	(setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist)))
+  
   ;; Clojure
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/clojure-mode")
-  (require 'clojure-mode)
+  (when (file-exists-p "/usr/share/emacs/site-lisp/clojure-mode")
+	(add-to-list 'load-path "/usr/share/emacs/site-lisp/clojure-mode")
+	(require 'clojure-mode))
 
   ;; SLIME with SBCL
-  (setq inferior-lisp-program "/usr/bin/sbcl")
-  (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
-  (require 'slime)
-  (slime-setup)
+  (when (and (file-exists-p "/usr/bin/sbcl") (file-exists-p "/usr/share/emacs/site-lisp/slime/"))
+	(setf inferior-lisp-program "/usr/bin/sbcl")
+	(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+	(require 'slime)
+	(slime-setup))
 
   ;; Arch Linux PKGBUILD mode
-  (autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
-  (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist)))
+  (when (optional-require 'pkgbuild-mode)
+	(autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
+	(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))))
 
 ; CUDA
 (require 'cuda-mode)
