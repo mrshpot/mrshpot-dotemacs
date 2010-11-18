@@ -19,6 +19,8 @@
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 
+(require 'smooth-scrolling)
+
 ;; nicer frame titles
 (setf frame-title-format
 	  (concat "%b - "
