@@ -20,6 +20,7 @@
   (add-path "site-lisp")
   (add-path "site-lisp/color-theme"))
 (setf warning-suppress-types nil)
+(setf backup-by-copying t)
 
 ; mrshpot
 (require 'mrshpot)
