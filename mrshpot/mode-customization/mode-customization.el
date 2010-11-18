@@ -62,45 +62,13 @@
   ;; emacs-jabber
   (optional-require 'jabber)
 
-  ;; CMake
-  (optional-require 'cmake-mode)
-
-  ;; OCaml
-  (when (optional-require 'caml)
-	(setq auto-mode-alist
-		  (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
-	(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
-	(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
-	(if window-system (require 'caml-font)))
-
-  ;; Haskell
-  (when (optional-require 'haskell-mode)
-	(require 'inf-haskell)
-	(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-	(add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode)))
-
-  ;; PHP
-  (when (optional-require 'php-mode)
-	(autoload 'php-mode "php-mode.el" "PHP mode." t)
-	(setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist)))
-  
-  ;; Clojure
-  (when (file-exists-p "/usr/share/emacs/site-lisp/clojure-mode")
-	(add-to-list 'load-path "/usr/share/emacs/site-lisp/clojure-mode")
-	(require 'clojure-mode))
-
   ;; SLIME with SBCL
   (when (and (file-exists-p "/usr/bin/sbcl") (file-exists-p "/usr/share/emacs/site-lisp/slime/"))
 	(setf inferior-lisp-program "/usr/bin/sbcl")
 	(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
 	(require 'slime)
 	(setf common-lisp-hyperspec-root (concat "file:" emacs-root "html/CL-HyperSpec/"))
-	(slime-setup))
-
-  ;; Arch Linux PKGBUILD mode
-  (when (optional-require 'pkgbuild-mode)
-	(autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
-	(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))))
+	(slime-setup)))
 
 ; CUDA
 (require 'cuda-mode)
@@ -108,5 +76,37 @@
 
 ;; CEDET
 (load "my-cedet.el")
+
+;; CMake
+(require 'cmake-mode)
+
+;; OCaml
+(add-site-lisp-dir "caml-mode")
+(require 'caml)
+(setq auto-mode-alist
+	  (cons '("\\.ml[iylp]?$" . caml-mode) auto-mode-alist))
+(autoload 'caml-mode "caml" "Major mode for editing Caml code." t)
+(autoload 'run-caml "inf-caml" "Run an inferior Caml process." t)
+(if window-system (require 'caml-font))
+
+;; Haskell
+(require 'haskell-mode)
+(require 'inf-haskell)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode))
+
+;; PHP
+(require 'php-mode)
+(autoload 'php-mode "php-mode.el" "PHP mode." t)
+(setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
+
+;; Arch Linux PKGBUILD mode
+(autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
+(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
+
+;; Clojure
+(add-site-lisp-dir "clojure-mode")
+(require 'clojure-mode)
+
 
 (provide 'mode-customization)

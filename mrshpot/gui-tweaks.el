@@ -33,6 +33,7 @@
 ;; either some default theme is overriding the defaults
 ;; or the themes I try to load are broken.
 ;; my custom theme selection
+(add-site-lisp-dir "color-theme")
 (let ((my-theme 'zenburn))
   (cond
    ; zenburn
