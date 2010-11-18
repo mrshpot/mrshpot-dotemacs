@@ -1,16 +1,14 @@
 
-; Common Lisp
+;; Common Lisp
 (require 'cl)
 
 (global-set-key (kbd "C-x c") 'calculator)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
 (defvar emacs-root
-  (if (or (eq system-type 'gnu/linux)
-	  (eq system-type 'linux)
-	  (eq system-type 'cygwin))
-      (format "/home/%s/emacs/" (getenv "USER"))
-    "D:/emacs/"))
+  (case system-type
+	(('gnu/linux 'linux 'cygwin) (format "/home/%s/emacs/" (getenv "USER")))
+	(t "D:/emacs/")))
 
 (labels ((add-path (p)
 		   (add-to-list 'load-path
@@ -22,7 +20,7 @@
 (setf warning-suppress-types nil)
 (setf backup-by-copying t)
 
-; mrshpot
+;; mrshpot
 (require 'mrshpot)
 (load-library "mode-customization")
 
@@ -39,4 +37,3 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "raster" :family "Envy Code R")))))
-
