@@ -39,7 +39,6 @@
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
 
-
 ;; TODO: pull out optional stuff as stand-alone site-lisp packages
 (labels
 	((optional-require (feature)
@@ -95,6 +94,7 @@
 	(setf inferior-lisp-program "/usr/bin/sbcl")
 	(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
 	(require 'slime)
+	(setf common-lisp-hyperspec-root (concat "file:" emacs-root "html/CL-HyperSpec/"))
 	(slime-setup))
 
   ;; Arch Linux PKGBUILD mode
