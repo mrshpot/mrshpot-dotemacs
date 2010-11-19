@@ -90,6 +90,7 @@
 (if window-system (require 'caml-font))
 
 ;; Haskell
+(add-site-lisp-dir "haskell-mode")
 (require 'haskell-mode)
 (require 'inf-haskell)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
