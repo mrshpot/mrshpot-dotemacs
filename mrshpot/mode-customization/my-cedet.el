@@ -22,15 +22,16 @@
     ;; Semantic configuration
     (require 'semantic-ia)
     (require 'semantic-gcc)
-    ;; ECB (Emacs Code Browser)
-    (add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
-    (require 'ecb-autoloads)
     ;; CEDET EDE
     (require 'ede)
     (put 'dired-find-alternate-file 'disabled nil)))
 
 (semantic-mode 1)
 (global-ede-mode t)
+
+;; ECB (Emacs Code Browser)
+(add-site-lisp-dir "ecb-cvs")
+(require 'ecb)
 
 (global-semantic-idle-summary-mode)
 (setq semantic-complete-inline-analyzer-displayor-class 'semantic-displayor-ghost)
