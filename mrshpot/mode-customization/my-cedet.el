@@ -14,7 +14,8 @@
       (require 'cedet)
       (require 'semantic/sb)
       (require 'semantic/ia)
-	  (require 'semantic/analyze/refs))
+	  (require 'semantic/analyze/refs)
+	  (require 'semantic/bovine/c))
   (progn
     (message "Loading external CEDET..")
     ;; CEDET
