@@ -13,7 +13,8 @@
 				 load-path))
       (require 'cedet)
       (require 'semantic/sb)
-      (require 'semantic/ia))
+      (require 'semantic/ia)
+	  (require 'semantic/analyze/refs))
   (progn
     (message "Loading external CEDET..")
     ;; CEDET
@@ -28,6 +29,14 @@
 
 (semantic-mode 1)
 (global-ede-mode t)
+
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLEXPORT" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_CORE" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_CORE" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_BASE" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_BASE" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_XML" . ""))
+(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_ADV" . ""))
 
 ;; ECB (Emacs Code Browser)
 (add-site-lisp-dir "ecb-cvs")
