@@ -8,7 +8,8 @@
 (defvar emacs-root
   (case system-type
 	((gnu/linux linux cygwin) (format "/home/%s/emacs/" (getenv "USER")))
-	(t "D:/emacs/")))
+	(t "D:/emacs/"))
+  "The root directory for my customization.")
 
 (labels ((add-path (p)
 		   (add-to-list 'load-path
@@ -17,15 +18,17 @@
   (add-path "mrshpot/mode-customization")
   (add-path "site-lisp"))
 
-(defun add-site-lisp-dir (d)
+(defun add-site-lisp-dir (dir)
+  "Add DIR located in /usr/share/emacs/site-lisp/ or `emacs-root' to load-path.
+If there was no DIR in those locations, signal an error."
   (add-to-list 'load-path
 			   (let
-				   ((site-path (concat "/usr/share/emacs/site-lisp/" d))
-					(local-path (concat emacs-root "site-lisp/" d)))
+				   ((site-path (concat "/usr/share/emacs/site-lisp/" dir))
+					(local-path (concat emacs-root "site-lisp/" dir)))
 				 (cond
 				  ((file-exists-p site-path) site-path)
 				  ((file-exists-p local-path) local-path)
-				  (t (error (format "directory %s not found" d)))))))
+				  (t (error (format "directory %s not found" dir)))))))
 
 (setf warning-suppress-types nil)
 (setf backup-by-copying t)
