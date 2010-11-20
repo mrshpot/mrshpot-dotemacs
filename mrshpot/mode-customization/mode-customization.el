@@ -68,7 +68,11 @@
 	(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
 	(require 'slime)
 	(setf common-lisp-hyperspec-root (concat "file:" emacs-root "html/CL-HyperSpec/"))
-	(slime-setup)))
+	(slime-setup))
+
+  ;; StarDict Console Version
+  (when (optional-require 'sdcv-mode)
+	(global-set-key (kbd "C-c d") 'sdcv-search)))
 
 ; CUDA
 (require 'cuda-mode)
