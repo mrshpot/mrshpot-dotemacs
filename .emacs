@@ -44,6 +44,8 @@ If there was no DIR in those locations, signal an error."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(ecb-options-version "2.40")
+ '(ecb-tip-of-the-day nil)
+ '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e "))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
