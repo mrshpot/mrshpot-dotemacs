@@ -12,10 +12,9 @@ FORMAT-STRING will be passed to \\[format] and must contain a `%d' parameter."
 (setq numbered-shell-format "*shell-%d*")
 
 (defun shell-n (&optional number)
-  "Create a shell with name specified by `numbered-shell-format' (default `*shell-n*')
-Call the \\[shell] function with buffer name specified by
-numbered-shell-format (default `*shell-n'), where n is NUMBER if provided,
-or the first free number.
+  "Create a shell with name specified by `numbered-shell-format' (default \"*shell-%d*\")
+Identical to \\[shell] with a prefix arg.
+If NUMBER if provided, use it; otherwise use the first free number.
 
 Query for NUMBER if a prefix arg present."
   (interactive
