@@ -115,6 +115,7 @@
 
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
+(require 'sunrise-x-popviewer)
 
 ;; Rainbow Mode, a nice mode to display colors as colors in source files
 (require 'rainbow-mode)
