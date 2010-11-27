@@ -68,7 +68,7 @@
 	(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
 	(require 'slime)
 	(setf common-lisp-hyperspec-root (concat "file:" emacs-root "html/CL-HyperSpec/"))
-	(slime-setup))
+	(slime-setup '(slime-fancy)))
 
   ;; StarDict Console Version
   (when (optional-require 'sdcv-mode)
