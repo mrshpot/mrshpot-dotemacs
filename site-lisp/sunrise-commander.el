@@ -436,7 +436,7 @@
   '((((type tty) (class color) (min-colors 8))
      :background "green" :foreground "yellow" :bold t)
     (((type tty) (class mono)) :inverse-video t)
-    (t :background "#ace6ac" :foreground "yellow" :bold t :height 120))
+    (t :foreground "#f0dfaf" :bold t :height 120))
   "Face of the directory path in the active pane"
   :group 'sunrise)
 
@@ -445,7 +445,7 @@
      :background "black" :foreground "cyan")
     (((type tty) (class color) (min-colors 8) (background light))
      :background "white" :foreground "cyan")
-    (t :background "white" :foreground "lightgray" :bold t :height 120))
+    (t :foreground "#ac7373" :bold nil :height 120))
   "Face of the directory path in the passive pane"
   :group 'sunrise)
 
@@ -460,12 +460,12 @@
   :group 'sunrise)
 
 (defface sr-broken-link-face
-  '((t :foreground "red" :italic t))
+  '((t (:inherit font-lock-warning-face)))
   "Face to highlight broken symbolic links"
   :group 'sunrise)
 
 (defface sr-clex-hotchar-face
-  '((t :foreground "red" :bold t))
+  '((t (:inherit font-lock-warning-face)))
   "Face of the hot character (%) in CLEX mode. Indicates that a CLEX
 substitution may be about to happen."
   :group 'sunrise)
@@ -3551,20 +3551,20 @@ or (c)ontents? ")
      (font-lock-add-keywords 'sr-mode '((,regexp 1 (quote ,symbol))))
      (font-lock-add-keywords 'sr-virtual-mode '((,regexp 1 (quote ,symbol))))))
 
-(sr-rainbow sr-html-face              (:foreground "DarkOliveGreen")        "\\(^..[^d].*\\.x?html?$\\)")
-(sr-rainbow sr-xml-face               (:foreground "DarkGreen")             "\\(^..[^d].*\\.\\(xml\\|xsd\\|xslt?\\|wsdl\\)$\\)")
-(sr-rainbow sr-log-face               (:foreground "brown")                 "\\(^..[^d].*\\.log$\\)")
-(sr-rainbow sr-compressed-face        (:foreground "magenta")               "\\(^..[^d].*\\.\\(zip\\|bz2\\|t?gz\\|[zZ]\\|[jwers]?ar\\|xpi\\)$\\)")
-(sr-rainbow sr-packaged-face          (:foreground "DarkMagenta")           "\\(^..[^d].*\\.\\(deb\\|rpm\\)$\\)")
-(sr-rainbow sr-encrypted-face         (:foreground "DarkOrange1")           "\\(^..[^d].*\\.\\(gpg\\|pgp\\)$\\)")
+(sr-rainbow sr-html-face              (:foreground "#dfdfbf")               "\\(^..[^d].*\\.x?html?$\\)")
+(sr-rainbow sr-xml-face               (:foreground "#dfdfbf")               "\\(^..[^d].*\\.\\(xml\\|xsd\\|xslt?\\|wsdl\\)$\\)")
+(sr-rainbow sr-log-face               (:foreground "#dfdfbf")               "\\(^..[^d].*\\.log$\\)")
+(sr-rainbow sr-compressed-face        (:foreground "#dfdfbf")               "\\(^..[^d].*\\.\\(zip\\|bz2\\|t?gz\\|[zZ]\\|[jwers]?ar\\|xpi\\)$\\)")
+(sr-rainbow sr-packaged-face          (:foreground "#dfdfbf")               "\\(^..[^d].*\\.\\(deb\\|rpm\\)$\\)")
+(sr-rainbow sr-encrypted-face         (:foreground "#dfdfbf")               "\\(^..[^d].*\\.\\(gpg\\|pgp\\)$\\)")
 
-(sr-rainbow sr-directory-face         (:foreground "blue1" :bold t)         "\\(^..d.*/$\\)")
-(sr-rainbow sr-symlink-face           (:foreground "DeepSkyBlue" :italic t) "\\(^..l.*[^/]$\\)")
-(sr-rainbow sr-symlink-directory-face (:foreground "blue1" :italic t)       "\\(^..l.*/$\\)")
-(sr-rainbow sr-alt-marked-dir-face    (:foreground "DeepPink" :bold t)      "\\(^[^ *D].d.*$\\)")
-(sr-rainbow sr-alt-marked-file-face   (:foreground "DeepPink")              "\\(^[^ *D].[^d].*$\\)")
-(sr-rainbow sr-marked-dir-face        (:foreground "red" :bold t)           "\\(^[*D].d.*$\\)")
-(sr-rainbow sr-marked-file-face       (:foreground "red")                   "\\(^[*D].[^d].*$\\)")
+(sr-rainbow sr-directory-face         (:inherit dired-directory)            "\\(^..d.*/$\\)")
+(sr-rainbow sr-symlink-face           (:inherit dired-symlink)              "\\(^..l.*[^/]$\\)")
+(sr-rainbow sr-symlink-directory-face (:inherit sr-symlink-face :bold t)    "\\(^..l.*/$\\)")
+(sr-rainbow sr-alt-marked-dir-face    (:inherit dired-header :bold t)       "\\(^[^ *D].d.*$\\)")
+(sr-rainbow sr-alt-marked-file-face   (:inherit dired-header)               "\\(^[^ *D].[^d].*$\\)")
+(sr-rainbow sr-marked-dir-face        (:inherit dired-marked :bold t)       "\\(^[*D].d.*$\\)")
+(sr-rainbow sr-marked-file-face       (:inherit dired-marked)               "\\(^[*D].[^d].*$\\)")
 
 (provide 'sunrise-commander)
 
