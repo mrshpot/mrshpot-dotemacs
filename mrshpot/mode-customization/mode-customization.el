@@ -113,5 +113,10 @@
 (add-site-lisp-dir "clojure-mode")
 (require 'clojure-mode)
 
+;; Sunrise Commander, a Midnight Commander look-alike
+(require 'sunrise-commander)
+
+;; Rainbow Mode, a nice mode to display colors as colors in source files
+(require 'rainbow-mode)
 
 (provide 'mode-customization)
