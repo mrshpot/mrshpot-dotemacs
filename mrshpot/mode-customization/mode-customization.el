@@ -30,6 +30,10 @@
 				(setq tab-width 4)
 				(setq indent-tabs-mode t)))
 
+;; pretty Control-L
+(require 'pp-c-l)
+(setf pp^L-^L-string-pre "")
+
 ;; IDO, Interactively Do Things
 ;; for nicer autocompletion in minibuffer
 (require 'ido)
