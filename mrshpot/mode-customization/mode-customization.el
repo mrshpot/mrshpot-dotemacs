@@ -11,17 +11,17 @@
 ;; always end a file with a newline
 (setq require-final-newline 'query)
 
-;;; shell
+;; shell
 ;; Fix shell-mode color special characters
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-;;; cc-mode
+;; cc-mode
 ;; my preferred indentation style
 (setq c-default-style "ellemtel")
 (setq c-basic-offset 4)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
-;;; tabs
+;; tabs
 ;; force 4-space tabs
 (setq tab-width 4)
 (setq default-tab-width 4)
@@ -36,11 +36,21 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+;; FSF Info
 (require 'info)
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
 
-;; TODO: pull out optional stuff as stand-alone site-lisp packages
+;; ediff
+(setf ediff-window-setup-function 'ediff-setup-windows-plain)
+(setf ediff-split-window-function 'split-window-horizontally)
+
+;; Git
+(add-site-lisp-dir "git")
+(require 'git)
+(require 'git-blame)
+
+;; optional stuff that may or may not be present, as I don't use that for work anyway
 (labels
 	((optional-require (feature)
 					   (let ((res (require feature nil t)))
