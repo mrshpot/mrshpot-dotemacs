@@ -19,6 +19,7 @@
 ;; my preferred indentation style
 (setq c-default-style "ellemtel")
 (setq c-basic-offset 4)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 ;;; tabs
 ;; force 4-space tabs
