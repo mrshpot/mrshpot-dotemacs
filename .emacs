@@ -15,7 +15,7 @@
   (case system-type
 	((gnu/linux linux cygwin) (format "/home/%s/emacs/" (getenv "USER")))
 	(t (let ((home-path (normalize-slashes (concat (getenv "HOME") "/")))
-			 (default-path "D:/emacs"))
+			 (default-path "D:/emacs/"))
 		 (if (file-exists-p (concat home-path ".emacs"))
 			 home-path
 		   default-path))))
