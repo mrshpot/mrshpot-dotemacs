@@ -6,12 +6,19 @@
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
 (defun normalize-slashes (dirname)
+  "Reverse the Windows-backslashes to be Unix-slashes; get rid of doubles"
   (replace-regexp-in-string "//" "/" (replace-regexp-in-string "\\\\" "/" dirname)))
 
+;; Linux: ~/emacs/
+;; Windows: %HOME%/, if %HOME%/.emacs exists, else D:/emacs
 (defvar emacs-root
   (case system-type
 	((gnu/linux linux cygwin) (format "/home/%s/emacs/" (getenv "USER")))
-	(t (normalize-slashes (concat (getenv "HOME") "/")))
+	(t (let ((home-path (normalize-slashes (concat (getenv "HOME") "/")))
+			 (default-path "D:/emacs"))
+		 (if (file-exists-p (concat home-path ".emacs"))
+			 home-path
+		   default-path))))
   "The root directory for my customizations.")
 
 (labels ((add-path (p)
