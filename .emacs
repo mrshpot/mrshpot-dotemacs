@@ -5,11 +5,14 @@
 (global-set-key (kbd "C-x c") 'calculator)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
+(defun normalize-slashes (dirname)
+  (replace-regexp-in-string "//" "/" (replace-regexp-in-string "\\\\" "/" dirname)))
+
 (defvar emacs-root
   (case system-type
 	((gnu/linux linux cygwin) (format "/home/%s/emacs/" (getenv "USER")))
-	(t "D:/emacs/"))
-  "The root directory for my customization.")
+	(t (normalize-slashes (concat (getenv "HOME") "/")))
+  "The root directory for my customizations.")
 
 (labels ((add-path (p)
 		   (add-to-list 'load-path
