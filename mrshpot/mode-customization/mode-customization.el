@@ -124,6 +124,9 @@
 (autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
 
+;; DOS batch script mode
+(require 'batch-mode)
+
 ;; Clojure
 (add-site-lisp-dir "clojure-mode")
 (require 'clojure-mode)
