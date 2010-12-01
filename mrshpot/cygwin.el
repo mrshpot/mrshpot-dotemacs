@@ -6,7 +6,13 @@
 ;; under Windows and c:\cygwin exists. Assumes that C:\cygwin\bin is
 ;; not already in your Windows Path (it generally should not be).
 ;;
-(defconst cygwin-root "d:/cygwin")
+(defconst cygwin-root (or
+					   (pathname-if-exists "C:/cygwin")
+					   (pathname-if-exists "D:/cygwin")
+					   (pathname-if-exists "F:/cygwin")
+					   (pathname-if-exists (concat emacs-root "../cygwin"))
+					   (error "Could not locate cygwin")))
+
 (let* ((cygwin-bin (concat cygwin-root "/bin")))
   (when (and (eq 'windows-nt system-type)
              (file-readable-p cygwin-root))

@@ -5,9 +5,17 @@
 (global-set-key (kbd "C-x c") 'calculator)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
-(defun normalize-slashes (dirname)
-  "Reverse the Windows-backslashes to be Unix-slashes; get rid of doubles"
-  (replace-regexp-in-string "//" "/" (replace-regexp-in-string "\\\\" "/" dirname)))
+(defun normalize-slashes (pathname)
+  "Reverse the Windows-backslashes in PATHNAME to be Unix-slashes; get rid of doubles"
+  (replace-regexp-in-string "//" "/" (replace-regexp-in-string "\\\\" "/" pathname)))
+
+(defun pathname-if-exists (pathname)
+  "A convenience wrapper around `file-exists-p'
+
+Return PATHNAME if it exists, nil otherwise"
+  (if (file-exists-p pathname)
+	  pathname
+	nil))
 
 ;; Linux: ~/emacs/
 ;; Windows: %HOME%/, if %HOME%/.emacs exists, else D:/emacs
@@ -35,10 +43,10 @@ If there was no DIR in those locations, signal an error."
 			   (let
 				   ((site-path (concat "/usr/share/emacs/site-lisp/" dir))
 					(local-path (concat emacs-root "site-lisp/" dir)))
-				 (cond
-				  ((file-exists-p site-path) site-path)
-				  ((file-exists-p local-path) local-path)
-				  (t (error (format "directory %s not found" dir)))))))
+				 (or
+				  (pathname-if-exists site-path)
+				  (pathname-if-exists local-path)
+				  (t (error "site-lisp directory %s not found" dir))))))
 
 (setf warning-suppress-types nil)
 (setf backup-by-copying t)
