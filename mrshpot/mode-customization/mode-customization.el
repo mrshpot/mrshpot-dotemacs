@@ -115,6 +115,10 @@
 (autoload 'php-mode "php-mode.el" "PHP mode." t)
 (setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
 
+;; JavaScript: Steve Yegge's js2-mode
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+
 ;; Arch Linux PKGBUILD mode
 (autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
 (setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
