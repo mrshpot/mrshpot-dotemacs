@@ -15,6 +15,8 @@
 ;; Fix shell-mode color special characters
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
+(defalias 'qrr 'query-replace-regexp)
+
 ;; cc-mode
 ;; my preferred indentation style
 (setq c-default-style "ellemtel")
