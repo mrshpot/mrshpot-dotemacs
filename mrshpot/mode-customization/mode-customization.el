@@ -132,6 +132,11 @@
 (add-site-lisp-dir "clojure-mode")
 (require 'clojure-mode)
 
+;; C#
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(setq auto-mode-alist
+	  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
 (require 'sunrise-x-popviewer)
