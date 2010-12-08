@@ -1,7 +1,7 @@
 ;; central file to mrshpot's configuration.
 ;; everything else is loaded from here.
 
-(load "buffer-utils")
+(require 'shell-n)
 (load "gui-tweaks")
 (load "unicode-customization")
 (when (eq system-type 'windows-nt)
