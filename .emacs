@@ -76,4 +76,5 @@ If there was no DIR in those locations, signal an error."
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
  '(ecb-method-non-semantic-face ((((class color) (background dark)) (:inherit ecb-methods-general-face :foreground "#9c6363"))))
- '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4")))))
+ '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4"))))
+ '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170")))))
