@@ -8,6 +8,10 @@
 ;; default to unified diffs
 (setq diff-switches "-u")
 
+;; ediff
+(setf ediff-window-setup-function 'ediff-setup-windows-plain)
+(setf ediff-split-window-function 'split-window-horizontally)
+
 ;; always end a file with a newline
 (setq require-final-newline 'query)
 
@@ -49,10 +53,6 @@
 (require 'info)
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
-
-;; ediff
-(setf ediff-window-setup-function 'ediff-setup-windows-plain)
-(setf ediff-split-window-function 'split-window-horizontally)
 
 ;; Git
 (add-site-lisp-dir "git")
