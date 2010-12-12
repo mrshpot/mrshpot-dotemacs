@@ -70,7 +70,8 @@
   ;; EMMS
   (when (optional-require 'emms-setup)
 	(emms-standard)
-	(emms-default-players))
+	(emms-default-players)
+	(load "my-emms"))
 
   ;; W3M pager browser
   (when (optional-require 'w3m)
