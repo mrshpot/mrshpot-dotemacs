@@ -2,7 +2,7 @@
   "Prefix for the dired advice `dired-add-prefix'")
 
 (defadvice dired (after dired-add-prefix activate)
-  "Prefix the dired buffer with `dired-buffer-prefix' if it's non-nil"
+  "Prefix the dired buffer name with `dired-buffer-prefix' if it's non-nil"
   (when dired-buffer-prefix
 	(with-current-buffer ad-return-value
 	  (unless (string-match
