@@ -42,6 +42,9 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
+;; dired
+(load "my-dired.el")
+
 ;; FSF Info
 (require 'info)
 (add-to-list 'Info-additional-directory-list
