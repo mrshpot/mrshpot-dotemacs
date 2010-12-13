@@ -36,6 +36,8 @@ Return PATHNAME if it exists, nil otherwise"
   (add-path "mrshpot/mode-customization")
   (add-path "site-lisp"))
 
+(byte-recompile-directory emacs-root) ; recursively recompile all out-of-date .elc files
+
 (defun add-site-lisp-dir (dir)
   "Add DIR located in /usr/share/emacs/site-lisp/ or `emacs-root' to load-path.
 If there was no DIR in those locations, signal an error."
