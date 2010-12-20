@@ -105,7 +105,8 @@
   (let ((kwlist (fic-ext-mode-font-lock-keywords)))
     (if fic-ext-mode 
 	(font-lock-add-keywords nil kwlist 'append)
-      (font-lock-remove-keywords nil kwlist))))
+      (font-lock-remove-keywords nil kwlist))
+	(font-lock-fontify-buffer)))
 
 ;;;###autoload(add-hook 'c-mode-common-hook 'fic-ext-mode)
 ;;;###autoload(add-hook 'python-mode-hook 'fic-ext-mode)
