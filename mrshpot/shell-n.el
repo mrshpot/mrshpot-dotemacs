@@ -22,7 +22,7 @@ FORMAT-STRING will be passed to \\[format] and must contain a `%d' parameter."
 (setq shell-n-format "*shell-%d*")
 
 (defun shell-n (&optional number)
-  "Create a shell with name specified by `numbered-shell-format' (default \"*shell-%d*\")
+  "Create a shell with name specified by `shell-n-format' (default \"*shell-%d*\")
 Identical to \\[shell] with a prefix arg.
 If NUMBER if provided, use it; otherwise use the first free number.
 
