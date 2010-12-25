@@ -20,6 +20,7 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (defalias 'qrr 'query-replace-regexp)
+(defalias 'rs 'replace-string)
 
 ;; cc-mode
 ;; my preferred indentation style
