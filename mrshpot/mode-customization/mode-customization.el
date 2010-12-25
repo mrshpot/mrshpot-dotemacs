@@ -22,6 +22,9 @@
 (defalias 'qrr 'query-replace-regexp)
 (defalias 'rs 'replace-string)
 
+;; move between windows with M-arrows
+(windmove-default-keybindings 'meta)
+
 ;; cc-mode
 ;; my preferred indentation style
 (setq c-default-style "ellemtel")
