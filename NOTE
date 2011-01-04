@@ -1,1 +1,2 @@
-.emacs is actually a hard link to ../.emacs
+You should symlink the .emacs file in here to your ~/.emacs.
+On Windows, you should clone the repo directly into your Emacs %HOME%.
