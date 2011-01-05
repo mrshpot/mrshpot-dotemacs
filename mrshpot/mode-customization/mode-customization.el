@@ -9,6 +9,7 @@
 (setq diff-switches "-u")
 
 ;; ediff
+(require 'ediff)
 (setf ediff-window-setup-function 'ediff-setup-windows-plain)
 (setf ediff-split-window-function 'split-window-horizontally)
 
@@ -57,6 +58,11 @@
 (require 'info)
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
+
+;; DocView
+;; automatically switch to the next page
+(require 'doc-view)
+(setf doc-view-continuous t)
 
 ;; Git
 (add-site-lisp-dir "git")
