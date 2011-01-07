@@ -16,6 +16,10 @@
 ;; always end a file with a newline
 (setq require-final-newline 'query)
 
+(add-site-lisp-dir "smart-tab")
+(require 'smart-tab)
+(global-smart-tab-mode 1)
+
 ;; shell
 ;; Fix shell-mode color special characters
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
