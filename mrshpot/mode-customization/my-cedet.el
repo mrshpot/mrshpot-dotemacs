@@ -31,13 +31,32 @@
 (semantic-mode 1)
 (global-ede-mode t)
 
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLEXPORT" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_CORE" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_CORE" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_BASE" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_BASE" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_XML" . ""))
-(add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_ADV" . ""))
+;; from http://navaneethkn.wordpress.com/2009/10/11/getting-smart-completion-wxwidgets-cedet-emacs/
+;; Function to load all include files in the specified directory
+(defun DE-imply-includes-in-directory (dir)
+  "Add all header files in DIR to `semanticdb-implied-include-tags'."
+  (let ((files (directory-files dir t "^.+\\.h[hp]*$" t)))
+    (defvar-mode-local c++-mode semanticdb-implied-include-tags
+      (mapcar (lambda (header)
+                (semantic-tag-new-include
+                 header
+                 nil
+                 :filename header))
+              files))))
+
+(defun mrshpot-setup-wxwidgets ()
+  (interactive)
+  (semantic-add-system-include "/usr/include/wx-2.8")
+  
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLEXPORT" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_CORE" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_CORE" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_BASE" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_BASE" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_FWD_XML" . ""))
+  (add-to-list 'semantic-lex-c-preprocessor-symbol-map '("WXDLLIMPEXP_ADV" . ""))
+  
+  (DE-imply-includes-in-directory "/usr/lib/wx/include/gtk2-unicode-release-2.8/"))
 
 ;; ECB (Emacs Code Browser)
 (add-site-lisp-dir "ecb-cvs")
