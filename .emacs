@@ -17,6 +17,10 @@ Return PATHNAME if it exists, nil otherwise"
 	  pathname
 	nil))
 
+(defun path-join (&rest args)
+  (normalize-slashes
+   (mapconcat 'identity args "/")))
+
 ;; Linux: ~/emacs/
 ;; Windows: %HOME%/, if %HOME%/.emacs exists, else D:/emacs
 (defvar emacs-root
