@@ -86,3 +86,4 @@ If there was no DIR in those locations, signal an error."
  '(ecb-method-non-semantic-face ((((class color) (background dark)) (:inherit ecb-methods-general-face :foreground "#9c6363"))))
  '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4"))))
  '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170")))))
+(put 'narrow-to-region 'disabled nil)
