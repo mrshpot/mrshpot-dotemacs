@@ -16,9 +16,17 @@
 ;; always end a file with a newline
 (setq require-final-newline 'query)
 
+;; Smart-Tab
 (add-site-lisp-dir "smart-tab")
 (require 'smart-tab)
 (global-smart-tab-mode 1)
+
+;; yasnippet
+(add-site-lisp-dir "yasnippet")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory
+ (path-join emacs-root "site-lisp" "yasnippet" "snippets"))
 
 ;; shell
 ;; Fix shell-mode color special characters

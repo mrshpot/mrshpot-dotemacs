@@ -72,7 +72,8 @@ If there was no DIR in those locations, signal an error."
  '(ecb-tip-of-the-day nil)
  '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e ")
- '(ido-default-buffer-method (quote selected-window)))
+ '(ido-default-buffer-method (quote selected-window))
+ '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
