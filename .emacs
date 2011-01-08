@@ -73,7 +73,6 @@ If there was no DIR in those locations, signal an error."
  '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e ")
  '(ido-default-buffer-method (quote selected-window))
- '(smart-tab-disabled-major-modes (quote (term-mode shell-mode)))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.

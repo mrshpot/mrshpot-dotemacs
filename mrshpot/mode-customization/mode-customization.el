@@ -17,9 +17,16 @@
 (setq require-final-newline 'query)
 
 ;; Smart-Tab
-(add-site-lisp-dir "smart-tab")
-(require 'smart-tab)
-(global-smart-tab-mode 1)
+;; TODO:
+;;  - properly fall back to the default TAB behaviour in modes like
+;;    shell-mode, org-mode, inferior-python-mode, SLIME REPL
+;;    (disabling it for now as it breaks those modes and, I suspect, more)
+;;  - in elisp-mode, do what M-TAB does instead of what C-/ does
+;;  - in CEDET-enabled modes, try to do Semantic autocompletion,
+;;    otherwise fall back to C-/
+;; (add-site-lisp-dir "smart-tab")
+;; (require 'smart-tab)
+;; (global-smart-tab-mode 1)
 
 ;; yasnippet
 (add-site-lisp-dir "yasnippet")
