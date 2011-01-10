@@ -64,6 +64,9 @@
 (require 'pp-c-l)
 (setf pp^L-^L-string-pre "")
 
+(add-site-lisp-dir "highlight-indentation")
+(require 'highlight-indentation)
+
 ;; IDO, Interactively Do Things
 ;; for nicer autocompletion in minibuffer
 (require 'ido)
@@ -179,6 +182,14 @@
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
 (require 'sunrise-x-popviewer)
+
+;; Use cyrillic fonts in org-mode latex export
+(require 'org)
+(require 'org-latex)
+(mapcar (lambda (x)
+		  (setf (cadr x)
+				(replace-regexp-in-string "\\[T1\\]" "[T2A]" (cadr x))))
+		org-export-latex-classes)
 
 ;; Rainbow Mode, a nice mode to display colors as colors in source files
 (require 'rainbow-mode)
