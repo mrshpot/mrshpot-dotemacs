@@ -188,7 +188,9 @@
 (require 'org-latex)
 (mapcar (lambda (x)
 		  (setf (cadr x)
-				(replace-regexp-in-string "\\[T1\\]" "[T2A]" (cadr x))))
+				(concat
+				 (replace-regexp-in-string "\\[T1\\]" "[T2A]" (cadr x))
+				 "\n\\usepackage{amsmath}")))
 		org-export-latex-classes)
 
 ;; Rainbow Mode, a nice mode to display colors as colors in source files
