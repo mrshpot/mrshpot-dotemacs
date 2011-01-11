@@ -2724,7 +2724,7 @@ Key bindings:
 
 
   (local-set-key (kbd "/") 'csharp-maybe-insert-codedoc)
-  (local-set-key (kbd "{") 'csharp-insert-open-brace)
+  ;; (local-set-key (kbd "{") 'csharp-insert-open-brace)
 
 
   ;; Need the following for parse-partial-sexp to work properly with
