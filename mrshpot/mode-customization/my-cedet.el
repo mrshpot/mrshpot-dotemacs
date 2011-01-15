@@ -62,7 +62,7 @@
 (add-site-lisp-dir "ecb-cvs")
 (require 'ecb)
 
-(global-semantic-idle-summary-mode)
+;; (global-semantic-idle-summary-mode)
 (setq semantic-complete-inline-analyzer-displayor-class 'semantic-displayor-ghost)
 
 (defun my-cedet-hook ()
