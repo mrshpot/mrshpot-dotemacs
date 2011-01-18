@@ -79,13 +79,14 @@ If there was no DIR in those locations, signal an error."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Cousine"))))
+ '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "Andale Mono"))))
  '(dired-symlink ((t (:inherit font-lock-keyword-face :weight normal))))
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
  '(ecb-method-non-semantic-face ((((class color) (background dark)) (:inherit ecb-methods-general-face :foreground "#9c6363"))))
  '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4"))))
- '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170")))))
+ '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170"))))
+ '(w3m-italic ((t (:inherit italic)))))
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
