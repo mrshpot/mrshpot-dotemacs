@@ -67,6 +67,7 @@ If there was no DIR in those locations, signal an error."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["black" "#dca3a3" "#afd8af" "#f0dfaf" "#6ca0a3" "#dc8cc3" "#93e0e3" "#dcdccc"])
  '(dired-listing-switches "-alGgh")
  '(ecb-options-version "2.40")
  '(ecb-tip-of-the-day nil)
@@ -91,3 +92,4 @@ If there was no DIR in those locations, signal an error."
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
