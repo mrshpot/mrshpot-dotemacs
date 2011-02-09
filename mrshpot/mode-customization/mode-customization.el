@@ -13,6 +13,9 @@
 (setf ediff-window-setup-function 'ediff-setup-windows-plain)
 (setf ediff-split-window-function 'split-window-horizontally)
 
+;; CamelCase navigation
+(global-subword-mode 1)
+
 ;; always end a file with a newline
 (setq require-final-newline 'query)
 
