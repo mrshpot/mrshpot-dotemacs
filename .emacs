@@ -4,6 +4,7 @@
 
 (global-set-key (kbd "C-x c") 'calculator)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
+(global-set-key (kbd "C-c C-r") 'redraw-display)
 
 (defun normalize-slashes (pathname)
   "Reverse the Windows-backslashes in PATHNAME to be Unix-slashes; get rid of doubles"
