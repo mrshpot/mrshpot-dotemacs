@@ -51,8 +51,8 @@ If there was no DIR in those locations, signal an error."
 				   ((site-path (concat "/usr/share/emacs/site-lisp/" dir))
 					(local-path (concat emacs-root "site-lisp/" dir)))
 				 (or
-				  (pathname-if-exists site-path)
 				  (pathname-if-exists local-path)
+				  (pathname-if-exists site-path)
 				  (t (error "site-lisp directory %s not found" dir))))))
 
 (setf warning-suppress-types nil)
@@ -75,13 +75,14 @@ If there was no DIR in those locations, signal an error."
  '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e ")
  '(ido-default-buffer-method (quote selected-window))
+ '(safe-local-variable-values (quote ((syntax . common-lisp))))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "Andale Mono"))))
+ '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "xos4" :family "Terminus"))))
  '(dired-symlink ((t (:inherit font-lock-keyword-face :weight normal))))
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
