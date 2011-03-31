@@ -167,6 +167,9 @@
 ;; DOS batch script mode
 (require 'batch-mode)
 
+;; PowerShell
+(require 'powershell-mode)
+
 ;; Clojure
 (add-site-lisp-dir "clojure-mode")
 (require 'clojure-mode)
