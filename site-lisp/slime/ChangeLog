@@ -1,3 +1,69 @@
+2011-02-13  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-inspector-operate-on-point): Don't save the
+	point when inspecting a different object.
+	(slime-inspector-operate-on-point): If there is no action property
+	directly at the point, try looking at (1- (point)), many
+	inspectable objects are presented the end of the line, so it's
+	easier to navigate to them by C-e and still being able to activate
+	it.
+
+2011-02-08  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-choose-overlay-region): Don't use `list' instead
+	of `values', GNU Emacs fakes multiple values with lists, but
+	XEmacs uses real multiple values.
+	Reported by Raymond Toy.
+
+2011-02-04  Helmut Eller  <heller@common-lisp.net>
+
+	Be careful with interning.
+
+	* swank.lisp (find-definitions-for-emacs): Use parse-symbol.
+
+2011-02-04  Helmut Eller  <heller@common-lisp.net>
+
+	Don't double encode results for eval-in-emacs.
+
+	* slime.el (slime-check-eval-in-emacs-result): New.
+	(slime-eval-for-lisp): Use it.
+	* swank.lisp (unreadable-object): Removed.
+
+2011-02-02  Stas Boukarev  <stassats@gmail.com>
+
+	* swank.lisp (eval-in-emacs): Return unreadable results from Emacs
+	as an unreadable-object, not as a string.
+
+2011-02-02  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-eval-for-lisp): Return value as a string,
+	because it can be unreadable, e.g. #<buffer foo>
+	* swank.lisp (eval-in-emacs): Prevent reader errors.
+
+2011-02-02  Stas Boukarev  <stassats@gmail.com>
+
+	* swank.lisp (eval-in-emacs): Export it.
+
+2011-01-28  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-check-location-filename-sanity): Guard
+	against target-filename being NIL.
+
+2011-01-26  Helmut Eller  <heller@common-lisp.net>
+
+	Allow tail-merging in call-with-bindings.
+
+	* swank.lisp (call-with-bindings): Don't use progv if alist is
+	empty alist is empty.
+
+2011-01-20  Stas Boukarev  <stassats@gmail.com>
+
+	* swank-ecl.lisp (+TAGS+): change
+	(translate-logical-pathname #P"SYS:TAGS") to
+	(merge-pathnames "TAGS" (translate-logical-pathname "SYS:"))
+	because of case conversion the former results in a pathname with a
+	name "tags", which doesn't exist.
+
 2010-12-10  Stas Boukarev  <stassats@gmail.com>
 
 	* slime.el (slime-with-popup-buffer): Correct the docstring.
