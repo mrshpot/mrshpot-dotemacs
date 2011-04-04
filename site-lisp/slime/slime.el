@@ -927,8 +927,8 @@ The buffer also uses the minor-mode `slime-popup-buffer-mode'."
 
 (defun slime-init-popup-buffer (buffer-vars)
   (slime-popup-buffer-mode 1)
-  (multiple-value-setq (slime-buffer-package slime-buffer-connection)
-    buffer-vars))
+  (setf slime-buffer-package (car buffer-vars)
+        slime-buffer-connection (cadr buffer-vars)))
 
 (defun slime-display-popup-buffer (select)
   "Display the current buffer.
@@ -4962,32 +4962,12 @@ When displaying XREF information, this goes to the previous reference."
         (slime-remove-edits (point-min) (point-max)))
       (undo-only arg))))
 
-(defun slime-sexp-at-point-for-macroexpansion ()
-  "`slime-sexp-at-point' with special cases for LOOP."
-  (let ((string (slime-sexp-at-point-or-error))
-        (bounds (bounds-of-thing-at-point 'sexp))
-        (char-at-point (substring-no-properties (thing-at-point 'char))))
-    ;; SLIME-SEXP-AT-POINT(-OR-ERROR) uses (THING-AT-POINT 'SEXP)
-    ;; which is quite a bit botched: it returns "'(FOO BAR BAZ)" even
-    ;; when point is placed _at the opening parenthesis_, and hence
-    ;; "(FOO BAR BAZ)" wouldn't get expanded. Likewise for ",(...)",
-    ;; ",@(...)" (would return "@(...)"!!), and "\"(...)".
-    ;; So we better fix this up here:
-    (when (string= char-at-point "(")
-      (let ((char0 (elt string 0)))
-        (when (member char0 '(?\' ?\, ?\" ?\@))
-          (setf string (substring string 1))
-          (incf (car bounds)))))
-    (list string (cons (set-marker (make-marker) (car bounds))
-                       (set-marker (make-marker) (cdr bounds))))))
-
 (defvar slime-eval-macroexpand-expression nil
   "Specifies the last macroexpansion preformed. 
 This variable specifies both what was expanded and how.")
 
 (defun slime-eval-macroexpand (expander &optional string)
-  (let ((string (or string
-                    (car (slime-sexp-at-point-for-macroexpansion)))))
+  (let ((string (or string (slime-sexp-at-point))))
     (setq slime-eval-macroexpand-expression `(,expander ,string))
     (slime-eval-async slime-eval-macroexpand-expression
                       #'slime-initialize-macroexpansion-buffer)))
@@ -5024,15 +5004,15 @@ This variable specifies both what was expanded and how.")
 
 NB: Does not affect slime-eval-macroexpand-expression"
   (interactive)
-  (destructuring-bind (string bounds)
-      (slime-sexp-at-point-for-macroexpansion)
-    (lexical-let* ((start (car bounds))
-                   (end (cdr bounds))
+  (let* ((bounds (or (slime-bounds-of-sexp-at-point) 
+                     (error "No sexp at point"))))
+    (lexical-let* ((start (copy-marker (car bounds)))
+                   (end (copy-marker (cdr bounds)))
                    (point (point))
                    (package (slime-current-package))
                    (buffer (current-buffer)))
       (slime-eval-async 
-       `(,expander ,string)
+       `(,expander ,(buffer-substring-no-properties start end))
        (lambda (expansion)
          (with-current-buffer buffer
            (let ((buffer-read-only nil))
@@ -6206,7 +6186,6 @@ was called originally."
     (cons labels (cdr threads))))
 
 (defun slime-insert-thread (thread longest-lines)
-  (unless (bolp) (insert "\n"))
   (loop for i from 0
         for align in longest-lines
         for element in thread
@@ -6234,7 +6213,8 @@ was called originally."
           for thread in (cdr threads)
           do
           (slime-propertize-region `(thread-id ,index)
-            (slime-insert-thread thread longest-lines)))))
+            (slime-insert-thread thread longest-lines)
+            (insert "\n")))))
 
 
 ;;;;; Major mode
@@ -7695,7 +7675,8 @@ BODY returns true if the check succeeds."
   '(("foo")
     ("#:foo")
     ("#'foo")
-    ("#'(lambda (x) x)"))
+    ("#'(lambda (x) x)")
+    ("()"))
   (with-temp-buffer
     (lisp-mode)
     (insert string)
@@ -8599,7 +8580,7 @@ and skips comments."
 
 (defun slime-beginning-of-symbol ()
   "Move to the beginning of the CL-style symbol at point."
-  (while (re-search-backward "\\(\\sw\\|\\s_\\|\\s\\.\\|\\s\\\\|[#@|]\\)\\=" 
+  (while (re-search-backward "\\(\\sw\\|\\s_\\|\\s\\.\\|\\s\\\\|[#@|]\\)\\="
                              (when (> (point) 2000) (- (point) 2000))
                              t))
   (re-search-forward "\\=#[-+.<|]" nil t)
@@ -8621,19 +8602,40 @@ The result is unspecified if there isn't a symbol under the point."
 (defun slime-symbol-end-pos ()
   (save-excursion (slime-end-of-symbol) (point)))
 
+(defun slime-bounds-of-symbol-at-point ()
+  "Return the bounds of the symbol around point.
+The returned bounds are either nil or non-empty."
+  (let ((bounds (bounds-of-thing-at-point 'slime-symbol)))
+    (if (and bounds
+             (< (car bounds)
+                (cdr bounds)))
+        bounds)))
+
 (defun slime-symbol-at-point ()
   "Return the name of the symbol at point, otherwise nil."
   ;; (thing-at-point 'symbol) returns "" in empty buffers
-  (let ((string (thing-at-point 'slime-symbol)))
-    (and string
-         (not (equal string "")) 
-         (substring-no-properties string))))
+  (let ((bounds (slime-bounds-of-symbol-at-point)))
+    (if bounds
+        (buffer-substring-no-properties (car bounds)
+                                        (cdr bounds)))))
+
+(defun slime-bounds-of-sexp-at-point ()
+  "Return the bounds sexp at point as a pair (or nil)."
+  (or (slime-bounds-of-symbol-at-point)
+      (and (equal (char-after) ?\()
+           (member (char-before) '(?\' ?\, ?\@))
+           ;; hide stuff before ( to avoid quirks with '( etc.
+           (save-restriction
+             (narrow-to-region (point) (point-max))
+             (bounds-of-thing-at-point 'sexp)))
+      (bounds-of-thing-at-point 'sexp)))
 
 (defun slime-sexp-at-point ()
   "Return the sexp at point as a string, otherwise nil."
-  (or (slime-symbol-at-point)
-      (let ((string (thing-at-point 'sexp)))
-        (if string (substring-no-properties string) nil))))
+  (let ((bounds (slime-bounds-of-sexp-at-point)))
+    (if bounds
+        (buffer-substring-no-properties (car bounds)
+                                        (cdr bounds)))))
 
 (defun slime-sexp-at-point-or-error ()
   "Return the sexp at point as a string, othwise signal an error."

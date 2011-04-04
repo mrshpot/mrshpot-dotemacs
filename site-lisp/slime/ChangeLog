@@ -1,3 +1,44 @@
+2011-03-13  Stas Boukarev  <stassats@gmail.com>
+
+	* swank.lisp (format-restarts-for-emacs): Add
+	without-printing-errors around restart printing.
+
+2011-03-09  Helmut Eller  <heller@common-lisp.net>
+
+	Remove slime-sexp-at-point-for-macroexpansion.
+
+	* slime.el (slime-sexp-at-point-for-macroexpansion): Deleted.
+	(slime-eval-macroexpand): Use slime-sexp-at-point instead.
+	(slime-eval-macroexpand-inplace): Use
+	slime-bounds-of-sexp-at-point directly.
+
+2011-03-09  Helmut Eller  <heller@common-lisp.net>
+
+	Move some of the logic from slime-sexp-at-point-for-macroexpansion
+	into slime-sexp-at-point.
+
+	* slime.el (slime-bounds-of-sexp-at-point): New.  Special case if
+	we are at '( as slime-sexp-at-point-for-macroexpansion does.
+	(slime-bounds-of-symbol-at-point): New.
+	(slime-symbol-at-point, slime-sexp-at-point): Use the above.
+
+2011-02-24  Stas Boukarev  <stassats@gmail.com>
+
+	* swank-allegro.lisp (find-topframe): Fix excl::int-newest-frame
+	invocation for the latest alpha version of Allegro.
+	Patch by Gábor Melis.
+
+2011-02-18  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-init-popup-buffer): Don't use
+	multiple-value-setq on a list, XEmacs doesn't like it.
+
+2011-02-18  Stas Boukarev  <stassats@gmail.com>
+
+	* slime.el (slime-insert-threads): Make sure newlines have the
+	same thread-id property as the rest of the line. This fixes
+	confusion when point is at the end of a line.
+
 2011-02-13  Stas Boukarev  <stassats@gmail.com>
 
 	* slime.el (slime-inspector-operate-on-point): Don't save the
