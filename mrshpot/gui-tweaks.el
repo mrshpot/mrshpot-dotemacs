@@ -18,6 +18,7 @@
 ;; turn off gui stuff I don't use anyway
 (tool-bar-mode 0)
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
 
 (require 'smooth-scrolling)
 
