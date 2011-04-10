@@ -149,9 +149,8 @@
 (add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode))
 
 ;; PHP
-(require 'php-mode)
 (autoload 'php-mode "php-mode.el" "PHP mode." t)
-(setq auto-mode-alist (append '(("/*.\.php[345]?$" . php-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
 
 ;; JavaScript: Steve Yegge's js2-mode
 (autoload 'js2-mode "js2-mode" nil t)
@@ -159,10 +158,13 @@
 
 ;; Arch Linux PKGBUILD mode
 (autoload 'pkgbuild-mode  "pkgbuild-mode.el" "PKGBUILD mode." t)
-(setq auto-mode-alist (append '(("/PKGBUILD$" . pkgbuild-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("/PKGBUILD$" . pkgbuild-mode))
 
 ;; DOS batch script mode
-(require 'batch-mode)
+(autoload 'batch-mode  "batch-mode.el" "Batch script mode." t)
+(add-to-list 'auto-mode-alist '("\\.bat\\'" . batch-mode))
+(add-to-list 'auto-mode-alist '("\\.cmd\\'" . batch-mode))
+
 
 ;; PowerShell
 (autoload 'powershell-mode "powershell-mode.el" "PowerShell mode." t)
@@ -170,18 +172,17 @@
 
 ;; Clojure
 (add-site-lisp-dir "clojure-mode")
-(require 'clojure-mode)
+(autoload 'clojure-mode "clojure-mode.el" "Clojure mode." t)
+(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 
 ;; C#
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
-(setq auto-mode-alist
-	  (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
 
 ;; Markdown mode
 (autoload 'markdown-mode "markdown-mode.el"
    "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-   (cons '("\\.\\(text\\|md\\)" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.\\(text\\|md\\)" . markdown-mode))
 
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
@@ -198,6 +199,8 @@
 		org-export-latex-classes)
 
 ;; Rainbow Mode, a nice mode to display colors as colors in source files
-(require 'rainbow-mode)
+(autoload 'rainbow-mode "rainbow-mode.el"
+  "Color names with colored background." t)
 
 (provide 'mode-customization)
+;;;; mode-customization.el ends here
