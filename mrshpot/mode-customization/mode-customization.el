@@ -97,11 +97,8 @@
 ;; optional stuff that may or may not be present, as I don't use that for work anyway
 (labels
 	((optional-require (feature)
-					   (let ((res (require feature nil t)))
-						 (unless res
-						   (message
-							(format "Could not load optional feature %s. Skipping." feature)))
-						 res)))
+					   (or (require feature nil t)
+						   (message "Could not load optional feature %s. Skipping." feature))))
   ;; SuperCollider
   (optional-require 'sclang)
 
