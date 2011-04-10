@@ -167,6 +167,10 @@
 ;; DOS batch script mode
 (require 'batch-mode)
 
+;; PowerShell
+(autoload 'powershell-mode "powershell-mode.el" "PowerShell mode." t)
+(add-to-list 'auto-mode-alist '("\\.ps1$" . powershell-mode))
+
 ;; Clojure
 (add-site-lisp-dir "clojure-mode")
 (require 'clojure-mode)
