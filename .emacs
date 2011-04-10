@@ -78,7 +78,7 @@ If there was no DIR in those locations, signal an error."
  '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e ")
  '(ido-default-buffer-method (quote selected-window))
- '(safe-local-variable-values (quote ((Syntax . Common-Lisp) (syntax . common-lisp))))
+ '(safe-local-variable-values (quote ((Base . 10) (Syntax . ANSI-Common-Lisp) (Syntax . Common-Lisp) (syntax . common-lisp))))
  '(slime-net-coding-system (quote utf-8-unix))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
