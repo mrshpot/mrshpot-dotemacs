@@ -25,13 +25,16 @@ Return PATHNAME if it exists, nil otherwise"
 ;; Linux: ~/emacs/
 ;; Windows: %HOME%/, if %HOME%/.emacs exists, else D:/emacs
 (defvar emacs-root
-  (case system-type
-	((gnu/linux linux cygwin) (format "/home/%s/emacs/" (getenv "USER")))
-	(t (let ((home-path (normalize-slashes (concat (getenv "HOME") "/")))
-			 (default-path "D:/emacs/"))
-		 (if (file-exists-p (concat home-path ".emacs"))
-			 home-path
-		   default-path))))
+  (let ((candidates
+		 (list (normalize-slashes (concat (getenv "HOME") "/emacs/"))
+			   (normalize-slashes (concat (getenv "HOME") "/"))
+			   "D:/emacs/")))
+	(reduce (lambda (old-path new-path)
+			  (or old-path
+				  (and (file-exists-p (concat new-path ".emacs"))
+					   new-path)))
+			candidates
+			:initial-value nil))
   "The root directory for my customizations.")
 
 (labels ((add-path (p)
