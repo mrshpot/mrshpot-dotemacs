@@ -98,7 +98,7 @@
 (labels
 	((optional-require (feature)
 					   (or (require feature nil t)
-						   (message "Could not load optional feature %s. Skipping." feature))))
+						   (progn (message "Could not load optional feature %s. Skipping." feature) nil))))
   ;; SuperCollider
   (optional-require 'sclang)
 
