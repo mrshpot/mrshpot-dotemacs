@@ -1,12 +1,12 @@
-(defvar integrated-cedet-p
+(defvar built-in-cedet-p
   (or
    (and (= emacs-major-version 23) ;; CEDET is built-in since GNU Emacs 23.2
 	(>= emacs-minor-version 2))
    (> emacs-major-version 23)))
 
-(if integrated-cedet-p
+(if built-in-cedet-p
     (progn
-      (message "Loading integrated CEDET..")
+      (message "Loading built-in CEDET..")
       (setq load-path (remove-if (lambda (x)
 				   (or (search "site-lisp/cedet" x)
 				       (search "site-lisp/ecb" x)))
