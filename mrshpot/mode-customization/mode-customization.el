@@ -84,6 +84,9 @@
 (add-to-list 'Info-additional-directory-list
 			 (concat emacs-root "info"))
 
+;; Python
+(add-to-list 'auto-mode-alist '("\\.pyw$" . python-mode))
+
 ;; DocView
 ;; automatically switch to the next page
 (require 'doc-view)
