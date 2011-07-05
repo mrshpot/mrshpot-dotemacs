@@ -97,6 +97,10 @@
 (require 'git)
 (require 'git-blame)
 
+;; Uniquify files with same name in different directories
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
 ;; optional stuff that may or may not be present, as I don't use that for work anyway
 (labels
 	((optional-require (feature)
