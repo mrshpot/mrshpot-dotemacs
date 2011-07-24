@@ -38,6 +38,14 @@
 (yas/load-directory
  (path-join emacs-root "site-lisp" "yasnippet" "snippets"))
 
+;; auto-complete
+(add-site-lisp-dir "auto-complete")
+(require 'auto-complete-config)
+(ac-config-default)
+(setq ac-auto-start nil)
+(define-key ac-mode-map (kbd "C-c SPC") 'auto-complete)
+(setq ac-use-fuzzy t)
+
 ;; shell
 ;; Fix shell-mode color special characters
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
