@@ -3,7 +3,8 @@
 (require 'cl)
 
 (global-set-key (kbd "C-x c") 'calculator)
-(global-set-key (kbd "C-x p") 'previous-multiframe-window)
+;; C-x p was causing conflicts with ropemacs and I'm using windmove, try disabling it.
+;; (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 (global-set-key (kbd "C-c <C-return>") 'redraw-display)
 
 (defun normalize-slashes (pathname)
@@ -62,9 +63,9 @@ If there was no DIR in those locations, signal an error."
   "Add NEW-DIRECTORY to environment variable VAR (defaults to $PATH)
 Assume that paths are delimited with `path-separator'."
   (interactive "DDirectory to be added to path:")
-  (let ((dir (expand-file-name new-directory))
-		(var-name (or var "PATH"))
-		(old-value (getenv var-name)))
+  (let* ((dir (expand-file-name new-directory))
+		 (var-name (or var "PATH"))
+		 (old-value (getenv var-name)))
 	(when (not (file-directory-p dir))
 	  (error "%s is not a directory" dir))
 	(setenv var-name
