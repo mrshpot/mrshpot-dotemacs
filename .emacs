@@ -69,7 +69,7 @@ Assume that paths are delimited with `path-separator'."
 	  (error "%s is not a directory" dir))
 	(setenv var-name
 			(if old-value
-				(concat (getenv var-name) path-separator dir)
+				(concat dir path-separator old-value)
 			  dir))))
 
 (setf warning-suppress-types nil)
