@@ -45,6 +45,10 @@
 (setq ac-auto-start nil)
 (define-key ac-mode-map (kbd "C-c SPC") 'auto-complete)
 (setq ac-use-fuzzy t)
+(add-hook 'c++-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-semantic)))
+
+;; Python + Pymacs + ropemacs + stuff
+(load "my-python.el")
 
 ;; shell
 ;; Fix shell-mode color special characters
