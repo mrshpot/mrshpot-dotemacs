@@ -2,8 +2,8 @@
 (require 'auto-complete)
 
 (defvar python-interpreter
-  (or (pathname-if-exists "C:/Python27/python")
-	  (pathname-if-exists "C:/Python26/python")
+  (or (pathname-if-exists "C:/Python27/python.exe")
+	  (pathname-if-exists "C:/Python26/python.exe")
 	  (pathname-if-exists "/usr/bin/python2")
 	  (pathname-if-exists "/usr/bin/python27")
 	  (pathname-if-exists "/usr/bin/python2.7")
