@@ -47,4 +47,3 @@
 	  (mrshpot-load-pymacs python-interpreter)
 	  (mrshpot-load-ropemacs))
   (message "Python not found, skipping"))
-
