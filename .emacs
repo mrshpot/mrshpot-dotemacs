@@ -58,6 +58,20 @@ If there was no DIR in those locations, signal an error."
 				  (pathname-if-exists site-path)
 				  (t (error "site-lisp directory %s not found" dir))))))
 
+(defun add-path-to-env (new-directory &optional var)
+  "Add NEW-DIRECTORY to environment variable VAR (defaults to $PATH)
+Assume that paths are delimited with `path-separator'."
+  (interactive "DDirectory to be added to path:")
+  (let ((dir (expand-file-name new-directory))
+		(var-name (or var "PATH"))
+		(old-value (getenv var-name)))
+	(when (not (file-directory-p dir))
+	  (error "%s is not a directory" dir))
+	(setenv var-name
+			(if old-value
+				(concat (getenv var-name) path-separator dir)
+			  dir))))
+
 (setf warning-suppress-types nil)
 (setf backup-by-copying t)
 
