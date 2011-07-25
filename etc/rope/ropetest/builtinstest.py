@@ -271,6 +271,15 @@ class BuiltinTypesTest(unittest.TestCase):
         self.assertEquals(pyobjects.get_base_type('Function'),
                           l_var.get_type())
 
+    def test_lambda_function_definition(self):
+        self.mod.write('l = lambda x, y = 2, *a, **b: x + y\n')
+        pymod = self.pycore.resource_to_pyobject(self.mod)
+        l_var = pymod['l'].get_object()
+        self.assertTrue(l_var.get_name() is not None)
+        self.assertEquals(len(l_var.get_param_names()), 4)
+        self.assertEquals((pymod, 1),
+                          pymod['l'].get_definition_location())
+
     def test_lambdas_that_return_unknown(self):
         self.mod.write('a_var = (lambda: None)()\n')
         pymod = self.pycore.resource_to_pyobject(self.mod)
@@ -405,6 +414,21 @@ class BuiltinTypesTest(unittest.TestCase):
         pymod = self.pycore.resource_to_pyobject(self.mod)
         self.assertEquals(builtins.builtins['int'].get_object(),
                           pymod['l'].get_object().get_type())
+
+    def test_binary_or_left_value_unknown(self):
+        code = 'var = (asdsd or 3)\n'
+        pymod = self.pycore.get_string_module(code)
+        self.assertEquals(builtins.builtins['int'].get_object(),
+                          pymod['var'].get_object().get_type())
+
+    def test_unknown_return_object(self):
+        src = 'import sys\n' \
+              'def foo():\n' \
+              '  res = set(sys.builtin_module_names)\n' \
+              '  if foo: res.add(bar)\n'
+        self.project.prefs['import_dynload_stdmods'] = True
+        self.mod.write(src)
+        self.project.pycore.analyze_module(self.mod)
 
 
 class BuiltinModulesTest(unittest.TestCase):
