@@ -121,7 +121,7 @@ class BuiltinUnknown(_BuiltinElement, pyobjects.PyObject):
 def _object_attributes(obj, parent):
     attributes = {}
     for name in dir(obj):
-        if name == 'None':
+        if name == 'None' or name == '__abstractmethods__':
             continue
         child = getattr(obj, name)
         pyobject = None
