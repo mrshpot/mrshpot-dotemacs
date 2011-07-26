@@ -4,7 +4,7 @@
 	(>= emacs-minor-version 2))
    (> emacs-major-version 23)))
 
-(if built-in-cedet-p
+(if (and nil built-in-cedet-p)
     (progn
       (message "Loading built-in CEDET..")
       (setq load-path (remove-if (lambda (x)
@@ -19,7 +19,7 @@
   (progn
     (message "Loading external CEDET..")
     ;; CEDET
-    (load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+    (load-file (path-join emacs-root "site-lisp" "cedet-bzr" "common" "cedet.el"))
     (semantic-load-enable-code-helpers)
     ;; Semantic configuration
     (require 'semantic-ia)
@@ -28,7 +28,7 @@
     (require 'ede)
     (put 'dired-find-alternate-file 'disabled nil)))
 
-(semantic-mode 1)
+;; (semantic-mode 1)
 (global-ede-mode t)
 
 ;; from http://navaneethkn.wordpress.com/2009/10/11/getting-smart-completion-wxwidgets-cedet-emacs/
