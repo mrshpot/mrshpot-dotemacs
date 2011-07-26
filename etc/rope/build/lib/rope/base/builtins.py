@@ -121,7 +121,11 @@ class BuiltinUnknown(_BuiltinElement, pyobjects.PyObject):
 def _object_attributes(obj, parent):
     attributes = {}
     for name in dir(obj):
-        if name == 'None' or name == '__abstractmethods__':
+        if name == 'None':
+            continue
+        # XXX: Python issue 10006:
+        # __abstractmethods__ is in dir(type), but raises AttributeError
+        if isinstance(obj, type) and name == "__abstractmethods__":
             continue
         child = getattr(obj, name)
         pyobject = None
