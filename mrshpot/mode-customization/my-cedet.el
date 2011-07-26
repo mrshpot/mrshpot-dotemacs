@@ -26,6 +26,10 @@
     (require 'semantic-gcc)
     ;; CEDET EDE
     (require 'ede)
+	; XXX: Semantic is adding the hook for Python which I don't want
+	; because I'm using rope. Remove the hook.
+	; However, this is quite CEDET-implementation-sensitive.
+	(remove-hook 'python-mode-hook 'wisent-python-default-setup)
     (put 'dired-find-alternate-file 'disabled nil)))
 
 ;; (semantic-mode 1)
