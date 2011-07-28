@@ -4,11 +4,11 @@
 (defvar python-interpreter
   (or (pathname-if-exists "C:/Python27/python.exe")
 	  (pathname-if-exists "C:/Python26/python.exe")
-	  (pathname-if-exists "/usr/bin/python2")
 	  (pathname-if-exists "/usr/bin/python27")
 	  (pathname-if-exists "/usr/bin/python2.7")
 	  (pathname-if-exists "/usr/bin/python26")
-	  (pathname-if-exists "/usr/bin/python2.6"))
+	  (pathname-if-exists "/usr/bin/python2.6")
+	  (pathname-if-exists "/usr/bin/python2"))
   "Full path to Python2 interpreter")
 
 (defun add-to-pythonpath (new-directory)
