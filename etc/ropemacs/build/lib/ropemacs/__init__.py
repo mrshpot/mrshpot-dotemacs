@@ -459,8 +459,7 @@ If non-nil it binds:
 ================  ============================
 Key               Command
 ================  ============================
-M-/               rope-code-assist
-C-c g             rope-goto-definition
+C-c j             rope-goto-definition
 C-c u             rope-pop-mark
 C-c d             rope-show-doc
 C-c f             rope-find-occurrences
@@ -538,9 +537,8 @@ MINOR_MODE = """\
 )
 """
 
-shortcuts = [('M-/', 'rope-code-assist'),
-             ('M-?', 'rope-lucky-assist'),
-             ('C-c g', 'rope-goto-definition'),
+shortcuts = [('M-?', 'rope-lucky-assist'),
+             ('C-c j', 'rope-goto-definition'),
              ('C-c u', 'rope-pop-mark'),
              ('C-c d', 'rope-show-doc'),
              ('C-c f', 'rope-find-occurrences')]
