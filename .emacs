@@ -92,6 +92,7 @@ Assume that paths are delimited with `path-separator'."
  '(ecb-tip-of-the-day nil)
  '(gdb-max-frames 200)
  '(grep-command "grep -nHI -e ")
+ '(grep-use-null-device nil)
  '(ido-default-buffer-method (quote selected-window))
  '(safe-local-variable-values (quote ((syntax . Common-Lisp) (Package . bind) (Base . 10) (Syntax . ANSI-Common-Lisp) (Syntax . Common-Lisp) (syntax . common-lisp))))
  '(slime-net-coding-system (quote utf-8-unix))
@@ -101,7 +102,7 @@ Assume that paths are delimited with `path-separator'."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 105 :width normal :foundry "xos4" :family "Terminus"))))
+ '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 110 :width normal :foundry "raster" :family "Envy Code R"))))
  '(dired-symlink ((t (:inherit font-lock-keyword-face :weight normal))))
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
