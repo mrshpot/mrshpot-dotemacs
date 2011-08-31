@@ -13,6 +13,9 @@
 (setf ediff-window-setup-function 'ediff-setup-windows-plain)
 (setf ediff-split-window-function 'split-window-horizontally)
 
+;; Diminish -- remove or rename modelines for minor modes
+(require 'diminish)
+
 ;; CamelCase navigation
 (global-subword-mode 1)
 
@@ -37,6 +40,7 @@
 (yas/initialize)
 (yas/load-directory
  (path-join emacs-root "site-lisp" "yasnippet" "snippets"))
+(eval-after-load 'yasnippet '(diminish 'yas/minor-mode " Y"))
 
 ;; auto-complete
 (add-site-lisp-dir "auto-complete")
@@ -46,6 +50,12 @@
 (define-key ac-mode-map (kbd "C-c SPC") 'auto-complete)
 (setq ac-use-fuzzy t)
 (add-hook 'c++-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-semantic)))
+(eval-after-load 'auto-complete-mode '(diminish 'auto-complete-mode))
+
+;; elisp, emacs lisp
+(add-hook 'emacs-lisp-mode-hook
+		  (lambda ()
+			(setq mode-name "el")))
 
 ;; Python + Pymacs + ropemacs + stuff
 (load "my-python.el")
