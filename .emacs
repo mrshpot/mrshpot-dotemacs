@@ -95,6 +95,7 @@ Assume that paths are delimited with `path-separator'."
  '(grep-command "grep -nHI -e ")
  '(grep-use-null-device nil)
  '(ido-default-buffer-method (quote selected-window))
+ '(nyan-bar-length 12)
  '(safe-local-variable-values (quote ((syntax . Common-Lisp) (Package . bind) (Base . 10) (Syntax . ANSI-Common-Lisp) (Syntax . Common-Lisp) (syntax . common-lisp))))
  '(slime-net-coding-system (quote utf-8-unix))
  '(sml-modeline-borders (quote ("[" . "]")))
