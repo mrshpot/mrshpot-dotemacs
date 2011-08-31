@@ -87,7 +87,6 @@ Assume that paths are delimited with `path-separator'."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["black" "#dca3a3" "#afd8af" "#f0dfaf" "#6ca0a3" "#dc8cc3" "#93e0e3" "#dcdccc"])
- '(calculator-electric-mode t)
  '(dired-listing-switches "-alGgh")
  '(ecb-options-version "2.40")
  '(ecb-tip-of-the-day nil)
@@ -95,6 +94,8 @@ Assume that paths are delimited with `path-separator'."
  '(grep-command "grep -nHI -e ")
  '(grep-use-null-device nil)
  '(ido-default-buffer-method (quote selected-window))
+ '(nyan-animate-nyancat t)
+ '(nyan-bar-length 16)
  '(safe-local-variable-values (quote ((syntax . Common-Lisp) (Package . bind) (Base . 10) (Syntax . ANSI-Common-Lisp) (Syntax . Common-Lisp) (syntax . common-lisp))))
  '(slime-net-coding-system (quote utf-8-unix))
  '(yas/trigger-key "<C-tab>"))
