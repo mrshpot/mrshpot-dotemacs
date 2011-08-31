@@ -4,3 +4,6 @@
 .emacs.d
 .ido.last
 .semanticdb
+.bash_history
+.gitk
+.ropeproject
