@@ -208,6 +208,9 @@
    "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.\\(text\\|md\\)" . markdown-mode))
 
+;; hl-tags-mode
+(autoload 'hl-tags-mode "hl-tags-mode" "Toggle hl-tags-mode." t)
+
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
 (require 'sunrise-x-popviewer)
