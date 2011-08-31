@@ -2,7 +2,7 @@
 ;; Common Lisp
 (require 'cl)
 
-(global-set-key (kbd "C-x c") 'calculator)
+(global-set-key [(control return)] 'calculator)
 ;; C-x p was causing conflicts with ropemacs and I'm using windmove, try disabling it.
 ;; (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 (global-set-key (kbd "C-c <C-return>") 'redraw-display)
@@ -87,6 +87,7 @@ Assume that paths are delimited with `path-separator'."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["black" "#dca3a3" "#afd8af" "#f0dfaf" "#6ca0a3" "#dc8cc3" "#93e0e3" "#dcdccc"])
+ '(calculator-electric-mode t)
  '(dired-listing-switches "-alGgh")
  '(ecb-options-version "2.40")
  '(ecb-tip-of-the-day nil)
