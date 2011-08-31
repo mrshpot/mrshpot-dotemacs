@@ -1,0 +1,7 @@
+[core]
+	autocrlf = false
+	safecrlf = false
+	filemode = false
+[user]
+	name = Taras Shpot
+	email = mrshpot@gmail.com
