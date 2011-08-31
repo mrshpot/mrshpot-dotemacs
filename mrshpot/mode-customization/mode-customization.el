@@ -153,6 +153,12 @@
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
+;; browse-kill-ring
+(require 'browse-kill-ring)
+(require 'browse-kill-ring+)
+(global-set-key (kbd "C-c k") 'browse-kill-ring)
+(setq browse-kill-ring-quit-action 'save-and-restore)
+
 ;; CMake
 (require 'cmake-mode)
 
