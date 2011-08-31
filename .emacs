@@ -87,7 +87,6 @@ Assume that paths are delimited with `path-separator'."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector ["black" "#dca3a3" "#afd8af" "#f0dfaf" "#6ca0a3" "#dc8cc3" "#93e0e3" "#dcdccc"])
- '(calculator-electric-mode t)
  '(dired-listing-switches "-alGgh")
  '(ecb-options-version "2.40")
  '(ecb-tip-of-the-day nil)
@@ -95,10 +94,10 @@ Assume that paths are delimited with `path-separator'."
  '(grep-command "grep -nHI -e ")
  '(grep-use-null-device nil)
  '(ido-default-buffer-method (quote selected-window))
+ '(nyan-animate-nyancat t)
+ '(nyan-bar-length 16)
  '(safe-local-variable-values (quote ((syntax . Common-Lisp) (Package . bind) (Base . 10) (Syntax . ANSI-Common-Lisp) (Syntax . Common-Lisp) (syntax . common-lisp))))
  '(slime-net-coding-system (quote utf-8-unix))
- '(sml-modeline-borders (quote ("[" . "]")))
- '(sml-modeline-numbers (quote percentage))
  '(yas/trigger-key "<C-tab>"))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
@@ -113,8 +112,6 @@ Assume that paths are delimited with `path-separator'."
  '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4"))))
  '(italic ((t (:inverse-video t :slant italic))))
  '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170"))))
- '(sml-modeline-end-face ((t (:inherit mode))))
- '(sml-modeline-vis-face ((t (:inherit fringe))))
  '(w3m-italic ((t (:inherit italic)))))
 (put 'narrow-to-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
