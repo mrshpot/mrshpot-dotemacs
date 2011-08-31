@@ -217,6 +217,10 @@
 ;; hl-tags-mode
 (autoload 'hl-tags-mode "hl-tags-mode" "Toggle hl-tags-mode." t)
 
+;; nyan cat mode
+(add-site-lisp-dir "nyan-mode-git")
+(autoload 'nyan-mode "nyan-mode" "Use NyanCat to show buffer size and position in mode-line." t)
+
 ;; Sunrise Commander, a Midnight Commander look-alike
 (require 'sunrise-commander)
 (require 'sunrise-x-popviewer)
