@@ -67,8 +67,8 @@
   (cond
     ;; fixme: when SBCL/win32 gains better select() support, remove
     ;; this.
-    ((member :win32 *features*) nil)
     ((member :sb-thread *features*) :spawn)
+    ((member :win32 *features*) nil)
     (t :fd-handler)))
 
 (defun resolve-hostname (name)
@@ -280,7 +280,15 @@
                                      :buffering buffering
                                      #+sb-unicode :external-format
                                      #+sb-unicode external-format
-                                     ))
+                                     :serve-events
+                                     (eq :fd-handler
+                                         ;; KLUDGE: SWANK package isn't
+                                         ;; available when backend is loaded.
+                                         (symbol-value
+                                          (intern "*COMMUNICATION-STYLE*" :swank)))
+                                     ;; SBCL < 1.0.42.43 doesn't support :SERVE-EVENTS
+                                     ;; argument.
+                                     :allow-other-keys t))
 
 (defun accept (socket)
   "Like socket-accept, but retry on EAGAIN."
