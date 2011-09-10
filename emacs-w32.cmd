@@ -1,12 +1,22 @@
-IF NOT DEFINED EMACS (
-    IF EXIST c:\emacs-23.3\bin\runemacs.exe (
-        SET EMACS=c:\emacs-23.3\bin\runemacs.exe
-    ) ELSE (
-        ECHO The EMACS environment variable is not set, could not find Emacs.
-        pause
-        exit /B 1
+@ECHO OFF
+FOR %%C IN (
+    %EMACS%
+    c:\emacs-23.3\bin\runemacs.exe
+    %~dp0\emacs\bin\runemacs.exe
+    %~dp0\emacs-23.3\bin\runemacs.exe
+    ) DO (
+    echo Trying %%C
+    IF EXIST %%C (
+        SET RUNEMACS=%%C
+        GOTO FOUND
     )
 )
 
+:NOTFOUND
+echo Could not find Emacs. Consider setting the EMACS environment variable.
+pause
+exit /B 1
+
+:FOUND
 set HOME=%~dp0
-start %EMACS% || pause
+start %RUNEMACS% || pause
