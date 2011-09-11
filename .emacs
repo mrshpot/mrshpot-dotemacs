@@ -3,7 +3,7 @@
 (require 'cl)
 
 ;; Always ask before killing Emacs
-(setq confirm-kill-emacs t)
+(setq confirm-kill-emacs #'yes-or-no-p)
 
 (global-set-key [(control return)] 'calculator)
 ;; C-x p was causing conflicts with ropemacs and I'm using windmove, try disabling it.
