@@ -215,6 +215,11 @@
 (autoload 'clojure-mode "clojure-mode.el" "Clojure mode." t)
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
 
+;; GLSL
+(autoload 'glsl-mode "glsl-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+
 ;; C#
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
