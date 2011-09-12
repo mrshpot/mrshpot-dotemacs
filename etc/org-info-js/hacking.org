@@ -1,0 +1,161 @@
+#+STARTUP: align fold nodlcheck hidestars oddeven lognotestate
+#+TITLE: Hacking org-info.js
+#+AUTHOR: Sebastian Rose
+#+EMAIL:
+#+LANGUAGE: en
+#+INFOJS_OPT: path:org-info.js
+#+INFOJS_OPT: toc:nil localtoc:t view:info mouse:underline
+#+INFOJS_OPT: up:http://orgmode.org/worg/code/org-info-js/index.html
+#+INFOJS_OPT: home:http://orgmode.org/worg/ buttons:t view:overview
+#+OPTIONS: ^:nil
+
+* Names
+
+  Some of the names in org-info-src.js are replaced when we `make' it, to save
+  some bytes (about 9 Kb currently).
+
+  NOTE: we cannot change some of the values used in set() and setup(), because
+  they are set using =eval()= and eventually extracted from the documents URI.
+
+  Note also: it is very important, to keep the values unique. All fields in
+  =org_html_manager= and =OrgNode= _must_ have different names in org-info-src.js
+  and in org-info-tmp.js!
+
+  =t= is used to assign =this= to it. Using =with(this)= is a bad idea, since
+  yuicompressor will refuse to optimize stuff inside that construct. IE seems to
+  slow down a bit, but I refuse to honor each and every bug in that trashcan.
+
+
+   |   | Occurs | Orginal Name          | Length | Replacement | New Length | Chars saved |
+   |---+--------+-----------------------+--------+-------------+------------+-------------|
+   | # |    700 | this                  |      4 | t           |          1 |        2100 |
+   | # |    110 | OrgNode               |      7 | O           |          1 |         660 |
+   | # |     19 | BASE_URL              |      8 | BU          |          2 |         114 |
+   | # |     14 | BODY                  |      4 | B           |          1 |          42 |
+   | # |      7 | CLICK_TIMEOUT         |     13 | CTO         |          3 |          70 |
+   | # |     37 | CONSOLE_INPUT         |     13 | CI          |          2 |         407 |
+   | # |      7 | CONSOLE_LABEL         |     13 | CL          |          2 |          77 |
+   | # |      5 | CONSOLE_OFFSET        |     14 | CO          |          2 |          60 |
+   | # |     21 | CONSOLE               |      7 | C           |          1 |         126 |
+   | # |     18 | HIST_INDEX            |     10 | HI          |          2 |         144 |
+   | # |     17 | HISTORY               |      7 | H           |          1 |         102 |
+   | # |      6 | LAST_VIEW_MODE        |     14 | LVM         |          3 |          66 |
+   | # |      3 | MESSAGING_INPLACE     |     17 | MgI         |          3 |          42 |
+   | # |      2 | MESSAGING_TOP         |     13 | MgT         |          3 |          20 |
+   | # |     14 | MESSAGING             |      9 | Mg          |          2 |          98 |
+   | # |     88 | NODE                  |      4 | N           |          1 |         264 |
+   | # |      8 | POSTAMBLE             |      9 | P           |          1 |          64 |
+   | # |      5 | Q_PARAM               |      7 | Q           |          1 |          30 |
+   | # |     23 | READ_COMMAND          |     12 | RC          |          2 |         230 |
+   | # |     10 | READING               |      7 | Rg          |          2 |          50 |
+   | # |      7 | HELPING               |      7 | Hg          |          2 |          35 |
+   | # |     43 | ROOT                  |      4 | R           |          1 |         129 |
+   | # |      6 | SEARCH_HIGHLIGHT_ON   |     18 | SHO         |          3 |          90 |
+   | # |    104 | SECS                  |      4 | S           |          1 |         312 |
+   | # |     11 | SEARCH                |      6 | SC          |          1 |          55 |
+   | # |      5 | SECNUM_               |      7 | SN_         |          3 |          20 |
+   | # |      6 | SORTED_TAGS           |     11 | ST          |          2 |          54 |
+   | # |      0 | TOC_LINK              |        | TL          |          0 |           0 |
+   | # |     17 | _REGEX                |      6 | X           |          1 |          85 |
+   | # |     18 | WINDOW                |      6 | W           |          1 |          90 |
+   | # |     23 | READ_COMMAND          |     12 | RC          |          2 |         230 |
+   | # |      3 | _PLAIN_URL_LINK       |     16 | _P          |          2 |          42 |
+   | # |      3 | _ORG_LINK             |      9 | _O          |          2 |          21 |
+   | # |      3 | _HTML_LINK            |     10 | _H          |          2 |          24 |
+   | # |     14 | INNER_TITLE           |     11 | IT          |          2 |         126 |
+   | # |      9 | TITLE                 |      5 | T           |          1 |          36 |
+   | # |      9 | .STATE_FOLDED         |     13 | .SF         |          3 |          90 |
+   | # |     15 | .STATE_UNFOLDED       |     15 | .SU         |          3 |         180 |
+   | # |      6 | .STATE_HEADLINES      |     16 | .SH         |          3 |          78 |
+   | # |     67 | .DIV                  |      4 | .D          |          2 |         134 |
+   | # |     27 | .FOLDER               |      7 | .F          |          2 |         135 |
+   | # |      5 | .BASE_ID              |      8 | .I          |          2 |          30 |
+   | # |     42 | .IDX                  |      4 | .J          |          2 |          84 |
+   | # |     35 | .HEADING              |      8 | .H          |          2 |         210 |
+   | # |      5 | .HAS_HIGHLIGHT        |     14 | .HH         |          3 |          55 |
+   | # |     19 | .PARENT               |      7 | .P          |          2 |          95 |
+   | # |      8 | .DIRTY                |      6 | .DRT        |          4 |          16 |
+   | # |     31 | .CHILDREN             |      9 | .CH         |          3 |         186 |
+   | # |     20 | .STATE                |      6 | .ST         |          3 |          60 |
+   | # |     11 | .BUTTONS              |      8 | .BS         |          3 |          55 |
+   | # |     11 | .DEPTH                |      6 | .DP         |          3 |          33 |
+   | # |      5 | adjustSlide           |     11 | aS          |          2 |          45 |
+   | # |      6 | endRead               |      7 | eR          |          2 |          30 |
+   | # |      5 | evalReadCommand       |     15 | eRC         |          3 |          60 |
+   | # |      8 | getDefaultTarget      |     16 | dT          |          2 |         112 |
+   | # |     11 | hideConsole           |     11 | hC          |          2 |          99 |
+   | # |     10 | highlightHeadline     |     17 | hH          |          2 |         150 |
+   | # |      4 | makeSearchRegexp      |     16 | mSR         |          3 |          52 |
+   | # |     25 | navigateTo            |     10 | go          |          2 |         200 |
+   | # |      7 | plainView             |      9 | pV          |          2 |          49 |
+   | # |      2 | pushHistory           |     11 | puH         |          3 |          16 |
+   | # |      3 | popHistory            |     10 | poH         |          3 |          21 |
+   | # |      5 | infoView              |      8 | iV          |          2 |          30 |
+   | # |      5 | slideView             |      9 | sV          |          2 |          35 |
+   | # |      5 | removeSearchHighlight |     21 | rSH         |          3 |          90 |
+   | # |     11 | removeTags            |     10 | rT          |          2 |          88 |
+   | # |      2 | removeOrgTags         |     13 | rOT         |          3 |          20 |
+   | # |      9 | removeWarning         |     13 | rW          |          2 |          99 |
+   | # |      5 | scheduleClick         |     13 | sCk         |          2 |          55 |
+   | # |      6 | searchTextInO         |     13 | sIN         |          3 |          60 |
+   | # |      3 | setSearchHighlight    |     18 | sSH         |          3 |          45 |
+   | # |      3 | showConsole           |     11 | sC          |          2 |          27 |
+   | # |     15 | showSection           |     11 | sS          |          2 |         135 |
+   | # |     22 | startRead             |      9 | sR          |          2 |         154 |
+   | # |      7 | toggleGlobaly         |     13 | tG          |          2 |          77 |
+   | # |      5 | .hideAllChildren      |     16 | .hAC        |          4 |          60 |
+   | # |     28 | .hideElement          |     13 | .hE         |          4 |         252 |
+   | # |      2 | .unhideElement        |     15 | .uhE        |          4 |          22 |
+   | # |      7 | .isTargetFor          |     12 | .iTF        |          4 |          56 |
+   | # |      7 | .findTargetsIn        |     14 | .fTI        |          4 |          70 |
+   | # |      4 | .showAllChildren      |     16 | .sAC        |          4 |          48 |
+   | # |     18 | .showElement          |     13 | .sE         |          4 |         162 |
+   | # |      8 | .setState             |      9 | .sSt        |          4 |          40 |
+   |---+--------+-----------------------+--------+-------------+------------+-------------|
+   | # |        |                       |        |             |            |       10015 |
+   | ^ |        |                       |        |             |            |  totalBytes |
+	#+TBLFM: $7=($4-$6)*$2::$totalBytes=vsum(@-II$7..@-I$7)
+
+  Here are the differences between the last commit before 2009-06-21, and
+  directly after that.
+
+  Sizes befor compression:
+  : -rw-r--r-- 1 sebastian sebastian 75736 19. Jun 17:52 org-info-src.js
+  : -rw-r--r-- 1 sebastian sebastian 44585 19. Jun 17:53 org-info.js
+
+  Sizes after compression:
+  : -rw-r--r-- 1 sebastian sebastian 72785 22. Jun 00:03 org-info-src.js
+  : -rw-r--r-- 1 sebastian sebastian 65182 22. Jun 00:11 org-info-tmp.js
+  : -rw-r--r-- 1 sebastian sebastian 34618 22. Jun 00:11 org-info.js
+
+
+* this
+
+  Instead of =this.=, a local variable is used where ever possible. Note, that
+  this is not possible in recursive functions (e.g. in =OrgNode::fold()=).
+
+
+* Keyboard input
+
+  It sound like a paradoxon, but to get single key commands, the documents body
+  needs to be focussed. Never focus the =CONSOLE_INPUT=! This will not work in
+  IE.
+
+  There is one exeption from this rule though: reading input. This is done, when
+  a user wants to enter a search term or similar. If a single key commands wants
+  to enter the read mode, use the function =org_html_manager::startRead()= to
+  setup your processing and exit =getKey()= using =return=. Once the user is commits
+  the input (by pressing a key, that does not change the =CONSOLE_INPUT='s
+  contents), =evalReadCommand()= will be invoked. Put your evalution function in
+  there.
+
+  All sorts of commands are started in =getKey()= whatsoever.
+
+
+* Versions
+
+  Versions are restricted to for digits. Please keep the the third line of the
+  script in it's very format:
+  : org-info.js, v.N.N.N.N
+  The Makefile will not insert the correct version number below the shortcut
+  table (`?').
