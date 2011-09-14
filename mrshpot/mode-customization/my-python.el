@@ -1,6 +1,10 @@
 (require 'python)
 (require 'auto-complete)
 
+(add-hook 'python-mode-hook
+		  (lambda ()
+			(setq mode-name "Py")))
+
 (defvar python-interpreter
   (or (pathname-if-exists "C:/Python27/python.exe")
 	  (pathname-if-exists "C:/Python26/python.exe")
