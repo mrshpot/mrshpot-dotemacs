@@ -25,3 +25,21 @@
 	  (shell-command command (current-buffer))
 	  (setf shell-output (buffer-string)))
 	(insert shell-output)))
+
+(defun insert-c-header-guard ()
+  "Insert C header guard."
+  (interactive)
+  (let ((guard
+		 (concat "__"
+				 (upcase (replace-regexp-in-string "\\." "_" (buffer-name)))
+				 "__INCLUDED")))
+	(save-excursion
+	  (goto-char (point-min))
+	  (insert "#ifndef " guard)
+	  (newline)
+	  (insert "#define " guard)
+	  (newline 2)
+	  (goto-char (point-max))
+	  (newline)
+	  (insert "#endif // " guard)
+	  (newline))))
