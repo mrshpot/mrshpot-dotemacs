@@ -35,6 +35,7 @@
 ;; or the themes I try to load are broken.
 ;; my custom theme selection
 (add-site-lisp-dir "color-theme")
+(require 'color-theme)
 (let ((my-theme 'zenburn))
   (cond
    ; zenburn
@@ -59,5 +60,12 @@
    ;; almost-monokai
    ((eq my-theme 'almost-monokai)
     (load-library "color-themes/color-theme-almost-monokai")
-    (color-theme-almost-monokai))))
+    (color-theme-almost-monokai))
+   ((or (eq my-theme 'solarized-light)
+	   (eq my-theme 'solarized-dark))
+	(add-site-lisp-dir "color-themes/color-theme-solarized-git")
+	(require 'color-theme-solarized)
+	(let ((theme-symbol
+		   (intern (concat "color-theme-" (symbol-name my-theme)))))
+	  (funcall (symbol-function theme-symbol))))))
 
