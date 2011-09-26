@@ -19,4 +19,4 @@ exit /B 1
 
 :FOUND
 set HOME=%~dp0
-start %RUNEMACS% || pause
+start %RUNEMACS% --debug-init || pause
