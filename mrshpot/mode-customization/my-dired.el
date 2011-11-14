@@ -9,3 +9,5 @@
 			   (concat "^" dired-buffer-prefix ".*")
 			   (buffer-name))
 		(rename-buffer (concat dired-buffer-prefix (buffer-name)))))))
+
+(put 'dired-find-alternate-file 'disabled t)
