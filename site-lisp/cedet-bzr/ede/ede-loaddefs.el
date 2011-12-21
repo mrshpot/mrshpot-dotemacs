@@ -4,7 +4,7 @@
 
 
 ;;;### (autoloads (autoconf-parameters-for-macro) "autoconf-edit"
-;;;;;;  "autoconf-edit.el" (20014 46887))
+;;;;;;  "autoconf-edit.el" (20209 53672))
 ;;; Generated autoloads from autoconf-edit.el
 
 (autoload 'autoconf-parameters-for-macro "autoconf-edit" "\
@@ -18,7 +18,7 @@ Returns a list of the arguments passed into MACRO as strings.
 ;;;### (autoloads (ede-target-parent ede-parent-project ede-load-project-file
 ;;;;;;  project-make-dist project-compile-target project-compile-project
 ;;;;;;  project-edit-file-target ede-compile-target ede-remove-file
-;;;;;;  global-ede-mode) "ede" "ede.el" (20014 46887))
+;;;;;;  global-ede-mode) "ede" "ede.el" (20209 53672))
 ;;; Generated autoloads from ede.el
 
 (defvar ede-projects nil "\
@@ -88,6 +88,24 @@ could become slow in time.
 
 ;;;***
 
+;;;### (autoloads (ede-android-load) "ede-android" "ede-android.el"
+;;;;;;  (20209 53672))
+;;; Generated autoloads from ede-android.el
+
+(autoload 'ede-android-load "ede-android" "\
+Return an Android Project object if there is a match.
+Return nil if there isn't one.
+Argument DIR is the directory it is created for.
+ROOTPROJ is nil, since there is only one project.
+
+\(fn DIR &optional ROOTPROJ)" nil nil)
+
+(add-to-list 'ede-project-class-files (ede-project-autoload "android" :name "ANDROID ROOT" :file 'ede-android :proj-file "AndroidManifest.xml" :load-type 'ede-android-load :class-sym 'ede-android-project :new-p t) t)
+
+(eieio-defclass-autoload 'ede-android-project '(ede-project eieio-instance-tracker) "ede-android" "Project for Android applications.")
+
+;;;***
+
 ;;;### (autoloads nil "ede-auto" "ede-auto.el" (20014 46887))
 ;;; Generated autoloads from ede-auto.el
 
@@ -142,7 +160,7 @@ Display the results as a debug list.
 ;;;***
 
 ;;;### (autoloads (ede-cpp-root-load ede-cpp-root-project-root ede-cpp-root-project-file-for-dir)
-;;;;;;  "ede-cpp-root" "ede-cpp-root.el" (20014 46887))
+;;;;;;  "ede-cpp-root" "ede-cpp-root.el" (20209 53672))
 ;;; Generated autoloads from ede-cpp-root.el
 
 (autoload 'ede-cpp-root-project-file-for-dir "ede-cpp-root" "\
@@ -203,7 +221,7 @@ Create a custom-like buffer for sorting targets of current project.
 ;;;***
 
 ;;;### (autoloads (ede-emacs-load ede-emacs-project-root) "ede-emacs"
-;;;;;;  "ede-emacs.el" (20014 46887))
+;;;;;;  "ede-emacs.el" (20209 53672))
 ;;; Generated autoloads from ede-emacs.el
 
 (autoload 'ede-emacs-project-root "ede-emacs" "\
@@ -225,8 +243,8 @@ ROOTPROJ is nil, since there is only one project.
 
 ;;;***
 
-;;;### (autoloads (ede-find-file) "ede-files" "ede-files.el" (20014
-;;;;;;  46887))
+;;;### (autoloads (ede-find-file) "ede-files" "ede-files.el" (20209
+;;;;;;  53672))
 ;;; Generated autoloads from ede-files.el
 
 (autoload 'ede-find-file "ede-files" "\
@@ -258,7 +276,7 @@ Enable generic project loaders.
 ;;;***
 
 ;;;### (autoloads (ede-linux-load ede-linux-project-root) "ede-linux"
-;;;;;;  "ede-linux.el" (20014 46887))
+;;;;;;  "ede-linux.el" (20209 53672))
 ;;; Generated autoloads from ede-linux.el
 
 (autoload 'ede-linux-project-root "ede-linux" "\
@@ -290,6 +308,17 @@ Attempt to guess which project locate style to use
 based on `ede-locate-setup-options'.
 
 \(fn &optional PROJECT)" t nil)
+
+;;;***
+
+;;;### (autoloads (ede-m3-ede-items) "ede-m3" "ede-m3.el" (20209
+;;;;;;  53672))
+;;; Generated autoloads from ede-m3.el
+
+(autoload 'ede-m3-ede-items "ede-m3" "\
+Return a list of menu items based on EDE project stats.
+
+\(fn)" nil nil)
 
 ;;;***
 
@@ -403,8 +432,8 @@ Argument NEWVERSION is the version number to use in the current project.
 ;;;;;;  "ede-proj-elisp.el" "ede-proj-info.el" "ede-proj-maven2.el"
 ;;;;;;  "ede-proj-misc.el" "ede-proj-obj.el" "ede-proj-prog.el" "ede-proj-scheme.el"
 ;;;;;;  "ede-proj-shared.el" "ede-proj-skel.el" "ede-source.el" "ede-speedbar.el"
-;;;;;;  "ede-system.el" "makefile-edit.el" "project-am.el") (20014
-;;;;;;  47201 894106))
+;;;;;;  "ede-system.el" "makefile-edit.el" "project-am.el") (20209
+;;;;;;  53864 656591))
 
 ;;;***
 

@@ -3,6 +3,17 @@
 ;;; Code:
 
 
+;;;### (autoloads (srecode-semantic-handle-:android) "srecode-android"
+;;;;;;  "srecode-android.el" (20209 53672))
+;;; Generated autoloads from srecode-android.el
+
+(autoload 'srecode-semantic-handle-:android "srecode-android" "\
+Add android specific symbols into DICT based on the current project.
+
+\(fn DICT)" nil nil)
+
+;;;***
+
 ;;;### (autoloads (srecode-semantic-handle-:kill srecode-semantic-handle-:system
 ;;;;;;  srecode-semantic-handle-:file srecode-semantic-handle-:time
 ;;;;;;  srecode-semantic-handle-:user srecode-semantic-handle-:region
@@ -55,7 +66,7 @@ Add macros into the dictionary DICT based on the kill ring.
 ;;;***
 
 ;;;### (autoloads (srecode-compile-templates srecode-compile-file)
-;;;;;;  "srecode-compile" "srecode-compile.el" (20014 46887))
+;;;;;;  "srecode-compile" "srecode-compile.el" (20209 53672))
 ;;; Generated autoloads from srecode-compile.el
 
 (autoload 'srecode-compile-file "srecode-compile" "\
@@ -365,7 +376,7 @@ has set everything up already.
 ;;;***
 
 ;;;### (autoloads (srecode-semantic-handle-:java) "srecode-java"
-;;;;;;  "srecode-java.el" (20014 46887))
+;;;;;;  "srecode-java.el" (20209 53672))
 ;;; Generated autoloads from srecode-java.el
 
 (autoload 'srecode-semantic-handle-:java "srecode-java" "\
@@ -375,6 +386,17 @@ FILENAME_AS_PACKAGE - file/dir converted into a java package name.
 FILENAME_AS_CLASS - file converted to a Java class name.
 
 \(fn DICT)" nil nil)
+
+;;;***
+
+;;;### (autoloads (srecode-m3-items) "srecode-m3" "srecode-m3.el"
+;;;;;;  (20209 53672))
+;;; Generated autoloads from srecode-m3.el
+
+(autoload 'srecode-m3-items "srecode-m3" "\
+Return a list of menu items based on SRecode features.
+
+\(fn)" nil nil)
 
 ;;;***
 
@@ -396,7 +418,7 @@ Run ADEBUG on the output of `srecode-get-maps'.
 ;;;***
 
 ;;;### (autoloads (global-srecode-minor-mode srecode-minor-mode)
-;;;;;;  "srecode-mode" "srecode-mode.el" (20014 46887))
+;;;;;;  "srecode-mode" "srecode-mode.el" (20209 53672))
 ;;; Generated autoloads from srecode-mode.el
 
 (autoload 'srecode-minor-mode "srecode-mode" "\
@@ -531,7 +553,7 @@ MODE - The mode of this buffer.  If not declared yet, guess.
 
 ;;;### (autoloads (srecode-dump-templates srecode-mode-table-new
 ;;;;;;  srecode-get-mode-table) "srecode-table" "srecode-table.el"
-;;;;;;  (20014 46887))
+;;;;;;  (20209 53672))
 ;;; Generated autoloads from srecode-table.el
 
 (autoload 'srecode-get-mode-table "srecode-table" "\
@@ -638,7 +660,8 @@ Insert TAG into the current buffer with SRecode.
 ;;;***
 
 ;;;### (autoloads nil nil ("srecode-document-vars.el" "srecode-extract.el"
-;;;;;;  "srecode-load.el" "srecode.el") (20014 47194 993538))
+;;;;;;  "srecode-load.el" "srecode-template-wy.el" "srecode.el")
+;;;;;;  (20209 53863 332557))
 
 ;;;***
 

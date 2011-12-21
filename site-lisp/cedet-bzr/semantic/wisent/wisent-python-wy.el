@@ -3,7 +3,7 @@
 ;; Copyright (C) 2002, 2003, 2004, 2007 Richard Kim
 
 ;; Author: Taras Shpot <mrshpot@mariachi>
-;; Created: 2011-07-26 15:51:19+0300
+;; Created: 2011-12-21 14:34:40+0200
 ;; Keywords: syntax
 ;; X-RCS: $Id$
 
