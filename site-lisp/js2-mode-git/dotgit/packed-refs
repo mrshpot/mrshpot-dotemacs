@@ -1,0 +1,5 @@
+# pack-refs with: peeled 
+83ba8527b39f8ced37843d46336568bf458fd55c refs/remotes/origin/master
+a9ff661cd98bb7523bc04ca88270d64ef1d00620 refs/remotes/origin/indentation
+d0ef1f7437948ca570e937367db2c7901228d130 refs/remotes/origin/e4x-bare-cdata
+6753f5ac403d5f1e5f042e5a2be63052e613b3ae refs/remotes/origin/correct-for-scope

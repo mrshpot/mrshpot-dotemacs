@@ -172,6 +172,8 @@
 
 ;; CMake
 (require 'cmake-mode)
+(add-to-list 'auto-mode-alist '("CMakeLists.txt" . cmake-mode))
+(add-to-list 'auto-mode-alist '("/*.\.cmake$" . cmake-mode))
 
 ;; OCaml
 (add-site-lisp-dir "caml-mode")
@@ -194,6 +196,7 @@
 (add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
 
 ;; JavaScript: Steve Yegge's js2-mode
+(add-site-lisp-dir "js2-mode-git")
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
