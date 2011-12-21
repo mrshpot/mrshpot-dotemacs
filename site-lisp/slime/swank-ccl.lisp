@@ -82,15 +82,23 @@
   (let ((str (symbol-name sym)))
     `(or (find-symbol ,str :swank)
          (error "There is no symbol named ~a in the SWANK package" ,str))))
+;;; UTF8
+
+(defimplementation string-to-utf8 (string)
+  (ccl:encode-string-to-octets string :external-format :utf-8))
+
+(defimplementation utf8-to-string (octets)
+  (ccl:decode-string-from-octets octets :external-format :utf-8))
 
 ;;; TCP Server
 
 (defimplementation preferred-communication-style ()
   :spawn)
 
-(defimplementation create-socket (host port)
+(defimplementation create-socket (host port &key backlog)
   (ccl:make-socket :connect :passive :local-port port 
-                   :local-host host :reuse-address t))
+                   :local-host host :reuse-address t
+                   :backlog (or backlog 5)))
 
 (defimplementation local-port (socket)
   (ccl:local-port socket))

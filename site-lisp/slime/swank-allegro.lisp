@@ -27,14 +27,26 @@
   (documentation slot t))
 
 
+;;;; UTF8
+
+(defimplementation string-to-utf8 (s)
+  (let ((ef (load-time-value (excl:find-external-format :utf-8) t)))
+    (excl:string-to-octets s :external-format ef)))
+
+(defimplementation utf8-to-string (u)
+  (let ((ef (load-time-value (excl:find-external-format :utf-8) t)))
+    (excl:octets-to-string u :external-format ef)))
+
+
 ;;;; TCP Server
 
 (defimplementation preferred-communication-style ()
   :spawn)
 
-(defimplementation create-socket (host port)
+(defimplementation create-socket (host port &key backlog)
   (socket:make-socket :connect :passive :local-port port 
-                      :local-host host :reuse-address t))
+                      :local-host host :reuse-address t
+                      :backlog (or backlog 5)))
 
 (defimplementation local-port (socket)
   (socket:local-port socket))
@@ -462,7 +474,7 @@
                    (merge-pathnames (pathname filename))
                    *default-pathname-defaults*)))
           (compile-from-temp-file string buffer position filename)))
-    (reader-error () (values nil nil t))))
+    (reader-error () nil)))
 
 ;;;; Definition Finding
 
@@ -720,8 +732,8 @@
   (with-struct (inspect::field-def- name type access) def
     (ecase type
       ((:unsigned-word :unsigned-byte :unsigned-natural
-                       :unsigned-long :unsigned-half-long 
-                       :unsigned-3byte)
+                       :unsigned-long :unsigned-half-long
+                       :unsigned-3byte :unsigned-long32)
        (label-value-line name (inspect::component-ref-v object access type)))
       ((:lisp :value :func)
        (label-value-line name (inspect::component-ref object access)))
@@ -820,8 +832,11 @@
                                    #'mp:gate-open-p (mailbox.gate mbox)))))
 
 (defimplementation set-default-initial-binding (var form)
-  (setq excl:*cl-default-special-bindings*
-        (acons var form excl:*cl-default-special-bindings*)))
+  (push (cons var form)
+        #+(version>= 9 0)
+        excl:*required-thread-bindings*
+        #-(version>= 9 0)
+        excl::required-thread-bindings))
 
 (defimplementation quit-lisp ()
   (excl:exit 0 :quiet t))
