@@ -49,7 +49,8 @@
 (setq ac-auto-start nil)
 (define-key ac-mode-map (kbd "C-c SPC") 'auto-complete)
 (setq ac-use-fuzzy t)
-(add-hook 'c++-mode-hook (lambda () (add-to-list 'ac-sources 'ac-source-semantic)))
+(add-hook 'c-mode-common-hook
+		  (lambda () (add-to-list 'ac-sources 'ac-source-semantic)))
 (eval-after-load 'auto-complete-mode '(diminish 'auto-complete-mode))
 
 ;; elisp, emacs lisp
