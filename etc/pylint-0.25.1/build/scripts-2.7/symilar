@@ -1,0 +1,3 @@
+#!/usr/bin/python2
+from pylint.checkers import similar
+similar.run()
