@@ -1,5 +1,6 @@
 (require 'python)
 (require 'auto-complete)
+(require 'flymake)
 
 (add-hook 'python-mode-hook
 		  (lambda ()
@@ -18,7 +19,7 @@
 (defun add-to-pythonpath (new-directory)
   "Add NEW-DIRECTORY to $PYTHONPATH"
   (add-path-to-env new-directory "PYTHONPATH"))
-  
+
 (defun mrshpot-load-pymacs (python-interpreter)
   (setenv "PYMACS_PYTHON" python-interpreter)
   (add-to-pythonpath (path-join emacs-root "site-lisp" "pymacs" "build" "lib"))
@@ -40,14 +41,27 @@
   (add-to-pythonpath (path-join emacs-root "etc" "rope" "build" "lib"))
   (add-to-pythonpath (path-join emacs-root "etc" "ropemode" "build" "lib"))
   (add-to-pythonpath (path-join emacs-root "etc" "ropemacs" "build" "lib"))
+  (add-to-pythonpath (path-join emacs-root "etc" "pylint-0.25.1" "build" "lib"))
 
   (pymacs-load "ropemacs" "rope-")
   (setq ropemacs-enable-autoimport t)
   (setq ropemacs-guess-project t)
   (ac-ropemacs-setup))
 
+(defun flymake-get-pylint-cmdline (source base-dir)
+  `(,python-interpreter ("-c" "from pylint import epylint; epylint.Run();" ,source)))
+    
+(defun flymake-pylint-init ()
+  (flymake-simple-make-init-impl
+   'flymake-create-temp-inplace nil nil buffer-file-name 'flymake-get-pylint-cmdline))
+
+(defun mrshpot-setup-flymake ()
+  (add-to-list 'flymake-allowed-file-name-masks
+			   '("\\.py\\'" flymake-pylint-init)))
+
 (if python-interpreter
 	(progn
 	  (mrshpot-load-pymacs python-interpreter)
-	  (mrshpot-load-ropemacs))
+	  (mrshpot-load-ropemacs)
+	  (mrshpot-setup-flymake))
   (message "Python not found, skipping"))
