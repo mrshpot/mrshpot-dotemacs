@@ -115,6 +115,8 @@ Assume that paths are delimited with `path-separator'."
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
  '(ecb-method-non-semantic-face ((((class color) (background dark)) (:inherit ecb-methods-general-face :foreground "#9c6363"))))
  '(ecb-tag-header-face ((((class color) (background dark)) (:background "paleturquoise4"))))
+ '(flymake-errline ((((class color) (background dark)) (:background "#8c5353" :underline "#cc9393"))))
+ '(flymake-warnline ((((class color) (background dark)) (:underline "#f0dfaf"))))
  '(italic ((t (:inverse-video t :slant italic))))
  '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170"))))
  '(sml-modeline-end-face ((t (:inherit mode))))
