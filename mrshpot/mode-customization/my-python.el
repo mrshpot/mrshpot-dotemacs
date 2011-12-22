@@ -38,10 +38,10 @@
   (add-to-list 'ac-sources 'ac-source-ropemacs))
 
 (defun mrshpot-load-ropemacs ()
+  ;; ropemacs
   (add-to-pythonpath (path-join emacs-root "etc" "rope" "build" "lib"))
   (add-to-pythonpath (path-join emacs-root "etc" "ropemode" "build" "lib"))
   (add-to-pythonpath (path-join emacs-root "etc" "ropemacs" "build" "lib"))
-  (add-to-pythonpath (path-join emacs-root "etc" "pylint-0.25.1" "build" "lib"))
 
   (pymacs-load "ropemacs" "rope-")
   (setq ropemacs-enable-autoimport t)
@@ -49,13 +49,18 @@
   (ac-ropemacs-setup))
 
 (defun flymake-get-pylint-cmdline (source base-dir)
-  `(,python-interpreter ("-c" "from pylint import epylint; epylint.Run();" ,source)))
+  `(,python-interpreter ("-c" "import mrshpot_epylint; mrshpot_epylint.Run();" ,source)))
     
 (defun flymake-pylint-init ()
   (flymake-simple-make-init-impl
    'flymake-create-temp-inplace nil nil buffer-file-name 'flymake-get-pylint-cmdline))
 
 (defun mrshpot-setup-flymake ()
+  ;; pylint
+  (add-to-pythonpath (path-join emacs-root "etc" "pylint-deps"))
+  (add-to-pythonpath (path-join emacs-root "etc" "pylint-hack"))
+  (add-to-pythonpath (path-join emacs-root "etc" "pylint-0.25.1" "build" "lib"))
+
   (add-to-list 'flymake-allowed-file-name-masks
 			   '("\\.py\\'" flymake-pylint-init)))
 
