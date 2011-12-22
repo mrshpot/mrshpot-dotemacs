@@ -58,6 +58,10 @@
 		  (lambda ()
 			(setq mode-name "el")))
 
+;; set up flymake
+(require 'flymake)
+(require 'flymake-cursor)
+
 ;; Python + Pymacs + ropemacs + stuff
 (load "my-python.el")
 
