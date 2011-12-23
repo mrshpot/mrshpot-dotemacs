@@ -125,6 +125,10 @@
 (require 'git)
 (require 'git-blame)
 
+;; Magit
+(add-site-lisp-dir "magit-1.0.0")
+(autoload 'magit-status "magit" nil t)
+
 ;; Uniquify files with same name in different directories
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
