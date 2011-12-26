@@ -109,7 +109,7 @@ Assume that paths are delimited with `path-separator'."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "outline" :family "Envy Code R"))))
+ '(default ((t (:inherit nil :stipple nil :background "#3f3f3f" :foreground "#dcdccc" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 113 :width normal :foundry "outline" :family "Envy Code R"))))
  '(dired-symlink ((t (:inherit font-lock-keyword-face :weight normal))))
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(ecb-history-bucket-node-dir-soure-path-face ((((class color) (background dark)) (:inherit ecb-history-bucket-node-face :foreground "violet"))))
@@ -118,6 +118,9 @@ Assume that paths are delimited with `path-separator'."
  '(flymake-errline ((((class color) (background dark)) (:background "#8c5353" :underline "#cc9393"))))
  '(flymake-warnline ((((class color) (background dark)) (:underline "#f0dfaf"))))
  '(italic ((t (:inverse-video t :slant italic))))
+ '(magit-diff-add ((((class color) (background dark)) (:inherit diff-added))))
+ '(magit-diff-del ((((class color) (background dark)) (:inherit diff-removed))))
+ '(magit-item-highlight ((((class color) (background dark)) (:background "#4f4f4f"))))
  '(slime-repl-inputed-output-face ((((class color) (background dark)) (:foreground "#e37170"))))
  '(sml-modeline-end-face ((t (:inherit mode))))
  '(sml-modeline-vis-face ((t (:inherit fringe))))
