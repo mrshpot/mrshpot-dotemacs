@@ -31,7 +31,7 @@
   (interactive)
   (let ((guard
 		 (concat "__"
-				 (upcase (replace-regexp-in-string "\\." "_" (buffer-name)))
+				 (upcase (replace-regexp-in-string "\\.\\|-" "_" (buffer-name)))
 				 "__INCLUDED")))
 	(save-excursion
 	  (goto-char (point-min))
