@@ -245,6 +245,17 @@
 (add-to-list 'auto-mode-alist '("\\.l?agda\\'" . agda2-mode))
 (modify-coding-system-alist 'file "\\.l?agda\\'" 'utf-8)
 
+;; Mozart/Oz
+(add-site-lisp-dir "mozart")
+(autoload 'oz-mode "oz" "Major mode for editing Oz code." t)
+(autoload 'ozm-mode "mozart" "Major mode for displaying Oz machine code." t)
+(autoload 'oz-gump-mode "oz" "Major mode for editing Oz code with embedded Gump specifications." t)
+(setq auto-mode-alist
+	  (append '(("\\.oz$" . oz-mode)
+				("\\.ozm$" . ozm-mode)
+				("\\.ozg$" . oz-gump-mode))
+			  auto-mode-alist))
+
 ;; C#
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
