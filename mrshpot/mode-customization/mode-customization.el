@@ -204,6 +204,12 @@
 (autoload 'php-mode "php-mode.el" "PHP mode." t)
 (add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
 
+;; Rust, an experimental language from Mozilla
+(add-site-lisp-dir "rust-mode")
+(autoload 'rust-mode "rust-mode" "Major mode for editing Rust source files." t)
+(add-to-list 'auto-mode-alist '("\\.rs$" . rust-mode))
+(add-to-list 'auto-mode-alist '("\\.rc$" . rust-mode))
+
 ;; JavaScript: Steve Yegge's js2-mode
 (add-site-lisp-dir "js2-mode-git")
 (autoload 'js2-mode "js2-mode" nil t)
