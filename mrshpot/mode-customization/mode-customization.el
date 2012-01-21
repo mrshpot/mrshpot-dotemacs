@@ -239,6 +239,12 @@
 (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
 
+;; Agda
+(add-site-lisp-dir "agda-mode")
+(autoload 'agda2-mode "agda2-mode" "Major mode for Agda files." t)
+(add-to-list 'auto-mode-alist '("\\.l?agda\\'" . agda2-mode))
+(modify-coding-system-alist 'file "\\.l?agda\\'" 'utf-8)
+
 ;; C#
 (autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
 (add-to-list 'auto-mode-alist '("\\.cs$" . csharp-mode))
