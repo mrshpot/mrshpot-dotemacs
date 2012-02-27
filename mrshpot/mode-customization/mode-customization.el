@@ -85,10 +85,10 @@
 ;; force 4-space tabs
 (setq tab-width 4)
 (setq default-tab-width 4)
-(setq indent-tabs-mode t)
+(setq indent-tabs-mode nil)
 (add-hook 'c-mode-common-hook (lambda ()
 				(setq tab-width 4)
-				(setq indent-tabs-mode t)))
+				(setq indent-tabs-mode nil)))
 
 ;; pretty Control-L
 (require 'pp-c-l)
