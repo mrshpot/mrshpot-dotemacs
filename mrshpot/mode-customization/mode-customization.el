@@ -139,6 +139,7 @@
 					   (or (require feature nil t)
 						   (progn (message "Could not load optional feature %s. Skipping." feature) nil))))
   ;; SuperCollider
+  (add-site-lisp-dir "scel/el")
   (optional-require 'sclang)
 
   ;; EMMS
