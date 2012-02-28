@@ -30,7 +30,7 @@
   "Insert C header guard."
   (interactive)
   (let ((guard
-		 (concat "__"
+		 (concat ""
 				 (upcase (replace-regexp-in-string "\\.\\|-" "_" (buffer-name)))
 				 "__INCLUDED")))
 	(save-excursion
