@@ -1,0 +1,6 @@
+#name : disable copying
+# --
+private:
+    // disable copying
+    ${1:Name}(const $1 &);
+	$1& operator=(const $1 &);
