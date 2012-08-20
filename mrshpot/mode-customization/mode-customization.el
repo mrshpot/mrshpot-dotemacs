@@ -163,6 +163,12 @@
 (require 'cuda-mode)
 (setq auto-mode-alist (append '(("/*.\.cuh$" . cuda-mode)) auto-mode-alist))
 
+;; Lua
+(add-site-lisp-dir "lua-mode-git")
+(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
+(add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
+(add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+
 ;; CEDET
 (load "my-cedet.el")
 
@@ -239,6 +245,7 @@
 (autoload 'glsl-mode "glsl-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
 
 ;; Agda
 (add-site-lisp-dir "agda-mode")
