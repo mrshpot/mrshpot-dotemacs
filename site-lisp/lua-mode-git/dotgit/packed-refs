@@ -1,0 +1,12 @@
+# pack-refs with: peeled 
+52fdb6361b9aa9f9de63ed35ce3300d5f1316527 refs/remotes/origin/comma_indentation
+cf27da57792bfc84c4142ac3e177b9d9e47edfb2 refs/remotes/origin/compat
+5ee103075e0de8e77a2835d23bb04cb0cc8104f7 refs/remotes/origin/gh-pages
+f926323f643a8b21c4f86919ad07ebb0e336f3a4 refs/remotes/origin/master
+f834c218bba844d118a0be580dc132e4ae6c3783 refs/remotes/origin/multiline_literals
+fe529b37d0cbe3f7fd3cc3acc84b6e92e9e84e62 refs/tags/rel-20110324
+^ddcd8b8af266385f3594dc6715ccbc4ad76c476a
+aa8bf01b5ca618cde0352374c77658f65f99f048 refs/tags/rel-20110428
+^9b929d4984a5b9e4d9132057ea9acfd719e81d0a
+a07028426a098404840e914e7fabdf81e31fb661 refs/tags/rel-20111107
+^a5cc71fc1f8ecb345c80d4c6c2291acd3c2ee817
