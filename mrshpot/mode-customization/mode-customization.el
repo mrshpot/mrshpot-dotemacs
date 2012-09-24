@@ -172,6 +172,9 @@
 ;; CEDET
 (load "my-cedet.el")
 
+;; UUID
+(require 'uuid)
+
 ;; SLIME
 (load "my-slime.el")
 
