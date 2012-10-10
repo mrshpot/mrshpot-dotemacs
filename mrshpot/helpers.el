@@ -56,7 +56,8 @@
 (defun insert-c-header-guard-uuid ()
   "Insert C header guard in the form of _FILE_NAME_UUID_"
   (interactive)
-  (let* ((guard-base (concat (buffer-name) "_" (uuid-1)))
+  (let* ((stripped-fname (replace-regexp-in-string "\\.[^.]*$" "" (buffer-name)))
+		 (guard-base (concat stripped-fname "_" (uuid-1)))
 		 (guard (concat "_"
 						(replace-regexp-in-string "\\.\\|-" "_" guard-base)
 						"_")))
