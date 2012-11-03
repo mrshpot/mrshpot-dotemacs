@@ -8,6 +8,9 @@
 ;; default to unified diffs
 (setq diff-switches "-u")
 
+;; override whatever the default is
+(prefer-coding-system 'utf-8)
+
 ;; ediff
 (require 'ediff)
 (setf ediff-window-setup-function 'ediff-setup-windows-plain)
