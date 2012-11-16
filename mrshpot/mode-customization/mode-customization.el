@@ -80,6 +80,7 @@
 (setq c-default-style "ellemtel")
 (setq c-basic-offset 4)
 (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.inl\\'" . c++-mode))
 
 ;; tabs
 ;; force 4-space tabs
