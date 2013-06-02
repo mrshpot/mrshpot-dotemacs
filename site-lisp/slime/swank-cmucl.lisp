@@ -41,14 +41,16 @@
       (error 'type-error
              :datum (read-char stream nil #\Null)
              :expected-type (stream-element-type stream)
-             :format-control "Trying to read characters from a binary stream."))
+             :format-control 
+             "Trying to read characters from a binary stream."))
     ;; Let's go as low level as it seems reasonable.
     (let* ((numbytes (- end start))
            (total-bytes 0))
       ;; read-n-bytes may return fewer bytes than requested, so we need
       ;; to keep trying.
       (loop while (plusp numbytes) do
-            (let ((bytes-read (system:read-n-bytes stream s start numbytes nil)))
+            (let ((bytes-read (system:read-n-bytes stream s 
+                                                   start numbytes nil)))
               (when (zerop bytes-read)
                 (return-from read-into-simple-string total-bytes))
               (incf total-bytes bytes-read)
@@ -66,10 +68,9 @@
 
 ;;; UTF8
 
-(locally (declare (ext:inhibit-warnings 3))
-  (stream:octets-to-string
-   (stream:string-to-octets "compile utf8 transcoder" :external-format :utf-8)
-   :external-format :utf-8))
+(locally (declare (optimize (ext:inhibit-warnings 3)))
+  ;; Compile and load the utf8 format, if not already loaded.
+  (stream::find-external-format :utf-8))
 
 (defimplementation string-to-utf8 (string)
   (let ((ef (load-time-value (stream::find-external-format :utf-8) t)))
@@ -372,7 +373,7 @@ specific functions.")
         (cond ((zerop (length string))
                (return-from sis/in
                  (if eof-errorp
-                     (error (make-condition 'end-of-file :stream stream))
+                     (error 'end-of-file :stream stream)
                      eof-value)))
               (t
                (setf buffer string)
@@ -428,13 +429,14 @@ NIL if we aren't compiling from a buffer.")
 (defimplementation swank-compile-file (input-file output-file
                                        load-p external-format
                                        &key policy)
-  (declare (ignore external-format policy))
+  (declare (ignore policy))
   (clear-xref-info input-file)
   (with-compilation-hooks ()
     (let ((*buffer-name* nil)
           (ext:*ignore-extra-close-parentheses* nil))
       (multiple-value-bind (output-file warnings-p failure-p)
-          (compile-file input-file :output-file output-file)
+          (compile-file input-file :output-file output-file 
+                        :external-format external-format)
         (values output-file warnings-p
                 (or failure-p
                     (when load-p
@@ -473,15 +475,14 @@ NIL if we aren't compiling from a buffer.")
       (signal-compiler-condition condition context))))
 
 (defun signal-compiler-condition (condition context)
-  (signal (make-condition
-           'compiler-condition
-           :original-condition condition
-           :severity (severity-for-emacs condition)
-           :message (compiler-condition-message condition)
-           :source-context (compiler-error-context context)
-           :location (if (read-error-p condition)
-                         (read-error-location condition)
-                         (compiler-note-location context)))))
+  (signal 'compiler-condition
+          :original-condition condition
+          :severity (severity-for-emacs condition)
+          :message (compiler-condition-message condition)
+          :source-context (compiler-error-context context)
+          :location (if (read-error-p condition)
+                        (read-error-location condition)
+                        (compiler-note-location context))))
 
 (defun severity-for-emacs (condition)
   "Return the severity of CONDITION."
@@ -1035,18 +1036,23 @@ NAME can any valid function name (e.g, (setf car))."
 
 (defun dd-location (dd)
   "Return the location of a `defstruct'."
-  ;; Find the location in a constructor.
-  (function-location (struct-constructor dd)))
+  (let ((ctor (struct-constructor dd)))
+    (cond (ctor
+           (function-location (coerce ctor 'function)))
+          (t
+           (let ((name (kernel:dd-name dd)))
+             (multiple-value-bind (location foundp)
+                 (ext:info :source-location :defvar name)
+               (cond (foundp
+                      (resolve-source-location location))
+                     (t
+                      (error "No location for defstruct: ~S" name)))))))))
 
 (defun struct-constructor (dd)
-  "Return a constructor function from a defstruct definition.
-Signal an error if no constructor can be found."
+  "Return the name of the constructor from a defstruct definition."
   (let* ((constructor (or (kernel:dd-default-constructor dd)
-                          (car (kernel::dd-constructors dd))))
-         (sym (if (consp constructor) (car constructor) constructor)))
-    (unless sym
-      (error "Cannot find structure's constructor: ~S" (kernel::dd-name dd)))
-    (coerce sym 'function)))
+                          (car (kernel::dd-constructors dd)))))
+    (if (consp constructor) (car constructor) constructor)))
 
 ;;;;;; Generic functions and methods
 
@@ -1584,9 +1590,8 @@ A utility for debugging DEBUG-FUNCTION-ARGLIST."
          (kernel:*current-level* 0))
     (handler-bind ((di::unhandled-condition
 		    (lambda (condition)
-                      (error (make-condition
-                              'sldb-condition
-                              :original-condition condition)))))
+                      (error 'sldb-condition
+                             :original-condition condition))))
       (unwind-protect
            (progn
              #+(or)(sys:scrub-control-stack)

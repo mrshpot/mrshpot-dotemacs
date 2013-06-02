@@ -65,10 +65,10 @@
 ;;; UTF8
 
 (defimplementation string-to-utf8 (string)
-  (ef:encode-lisp-string string :utf-8))
+  (ef:encode-lisp-string string '(:utf-8 :eol-style :lf)))
 
 (defimplementation utf8-to-string (octets)
-  (ef:decode-external-string octets :utf-8))
+  (ef:decode-external-string octets '(:utf-8 :eol-style :lf)))
 
 ;;; TCP server
 
@@ -297,6 +297,11 @@ Return NIL if the symbol is unbound."
   (when (fboundp sym)
     (describe-function sym)))
 
+(defimplementation type-specifier-p (symbol)
+  (or (ignore-errors
+       (subtypep nil symbol))
+      (not (eq (type-specifier-arglist symbol) :not-available))))
+
 ;;; Debugging
 
 (defclass slime-env (env:environment) 
@@ -356,15 +361,20 @@ Return NIL if the symbol is unbound."
 
 (defun find-top-frame ()
   "Return the most suitable top-frame for the debugger."
-  (or (do ((frame (dbg::debugger-stack-current-frame dbg::*debugger-stack*)
-                  (nth-next-frame frame 1)))
-          ((or (null frame)             ; no frame found!
-               (and (dbg::call-frame-p frame)
-                    (eq (dbg::call-frame-function-name frame) 
-                        'invoke-debugger)))
-           (nth-next-frame frame 1)))
-      ;; if we can't find a invoke-debugger frame, take any old frame at the top
-      (dbg::debugger-stack-current-frame dbg::*debugger-stack*)))
+  (flet ((find-named-frame (name)
+           (do ((frame (dbg::debugger-stack-current-frame
+                        dbg::*debugger-stack*)
+                       (nth-next-frame frame 1)))
+               ((or (null frame)        ; no frame found!
+                    (and (dbg::call-frame-p frame)
+                         (eq (dbg::call-frame-function-name frame) 
+                             name)))
+                (nth-next-frame frame 1)))))
+    (or (find-named-frame 'invoke-debugger)
+        (find-named-frame (swank-sym :safe-backtrace))
+        ;; if we can't find a likely top frame, take any old frame
+        ;; at the top
+        (dbg::debugger-stack-current-frame dbg::*debugger-stack*))))
   
 (defimplementation call-with-debugging-environment (fn)
   (dbg::with-debugger-stack ()
@@ -400,7 +410,8 @@ Return NIL if the symbol is unbound."
                           (list (cond ((symbolp arg)
                                        (intern (symbol-name arg) :keyword))
                                       ((and (consp arg) (symbolp (car arg)))
-                                       (intern (symbol-name (car arg)) :keyword))
+                                       (intern (symbol-name (car arg))
+                                               :keyword))
                                       (t (caar arg)))))
                      (list (dbg::dbg-eval
                             (cond ((symbolp arg) arg)
@@ -452,10 +463,26 @@ Return NIL if the symbol is unbound."
   (let ((frame (nth-frame frame-number)))
     (dbg::dbg-eval form frame)))
 
+(defun function-name-package (name)
+  (typecase name
+    (null nil)
+    (symbol (symbol-package name))
+    ((cons (eql hcl:subfunction))
+     (destructuring-bind (name parent) (cdr name)
+       (declare (ignore name))
+       (function-name-package parent)))
+    ((cons (eql lw:top-level-form)) nil)
+    (t nil)))
+
+(defimplementation frame-package (frame-number)
+  (let ((frame (nth-frame frame-number)))
+    (if (dbg::call-frame-p frame)
+        (function-name-package (dbg::call-frame-function-name frame)))))
+
 (defimplementation return-from-frame (frame-number form)
   (let* ((frame (nth-frame frame-number))
          (return-frame (dbg::find-frame-for-return frame)))
-    (dbg::dbg-return-from-call-frame frame form return-frame 
+    (dbg::dbg-return-from-call-frame frame form return-frame
                                      dbg::*debugger-stack*)))
 
 (defimplementation restart-frame (frame-number)
@@ -564,6 +591,8 @@ Return NIL if the symbol is unbound."
 (defun lispworks-severity (condition)
   (cond ((not condition) :warning)
 	(t (etypecase condition
+             #-(or lispworks4 lispworks5)
+             (conditions:compiler-note :note)
 	     (error :error)
 	     (style-warning :warning)
 	     (warning :warning)))))
@@ -659,7 +688,7 @@ Return NIL if the symbol is unbound."
     (with-open-file (stream file)
       (let ((pos 
              #-(or lispworks4.1 lispworks4.2)
-             (dspec-stream-position stream dspec)))
+             (ignore-errors (dspec-stream-position stream dspec))))
         (if pos
             (list :position (1+ pos))
             (dspec-function-name-position dspec `(:position 1)))))))
@@ -681,8 +710,8 @@ Return NIL if the symbol is unbound."
     (symbol 
      `(:error ,(format nil "Cannot resolve location: ~S" location)))
     ((satisfies emacs-buffer-location-p)
-     (destructuring-bind (_ buffer offset string) location
-       (declare (ignore _ string))
+     (destructuring-bind (_ buffer offset) location
+       (declare (ignore _))
        (make-location `(:buffer ,buffer)
                       (dspec-function-name-position dspec `(:offset ,offset 0))
                       hints)))))
@@ -733,7 +762,7 @@ function names like \(SETF GET)."
   (declare (ignore filename policy))
   (assert buffer)
   (assert position)
-  (let* ((location (list :emacs-buffer buffer position string))
+  (let* ((location (list :emacs-buffer buffer position))
          (tmpname (hcl:make-temp-file nil "lisp")))
     (with-swank-compilation-unit (location)
       (compile-from-temp-file 
@@ -765,7 +794,8 @@ function names like \(SETF GET)."
      #'(lambda (object)
          (when (and #+Harlequin-PC-Lisp (low:compiled-code-p object)
                     #+Harlequin-Unix-Lisp (sys:callablep object)
-                    #-(or Harlequin-PC-Lisp Harlequin-Unix-Lisp) (sys:compiled-code-p object)
+                    #-(or Harlequin-PC-Lisp Harlequin-Unix-Lisp) 
+                    (sys:compiled-code-p object)
                     (system::find-constant$funcallable name object))
            (vector-push-extend object callers))))
     ;; Delay dspec:object-dspec until after sweep-all-objects
@@ -944,6 +974,26 @@ function names like \(SETF GET)."
     (mp:with-lock ((mailbox.mutex mbox))
       (setf (mailbox.queue mbox)
             (nconc (mailbox.queue mbox) (list message))))))
+
+(let ((alist '())
+      (lock (mp:make-lock :name "register-thread")))
+
+  (defimplementation register-thread (name thread)
+    (declare (type symbol name))
+    (mp:with-lock (lock)
+      (etypecase thread
+        (null 
+         (setf alist (delete name alist :key #'car)))
+        (mp:process
+         (let ((probe (assoc name alist)))
+           (cond (probe (setf (cdr probe) thread))
+                 (t (setf alist (acons name thread alist))))))))
+    nil)
+
+  (defimplementation find-registered (name)
+    (mp:with-lock (lock)
+      (cdr (assoc name alist)))))
+
 
 (defimplementation set-default-initial-binding (var form)
   (setq mp:*process-initial-bindings* 

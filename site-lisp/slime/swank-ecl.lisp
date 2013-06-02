@@ -10,14 +10,20 @@
 
 (in-package :swank-backend)
 
+
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (let ((version (find-symbol "+ECL-VERSION-NUMBER+" :EXT)))
-    (when (or (not version) (< (symbol-value version) 100301))
-      (error "~&IMPORTANT:~%  ~
+  (defun ecl-version ()
+    (let ((version (find-symbol "+ECL-VERSION-NUMBER+" :EXT)))
+      (if version
+          (symbol-value version)
+          0)))
+  (when (< (ecl-version) 100301)
+    (error "~&IMPORTANT:~%  ~
               The version of ECL you're using (~A) is too old.~%  ~
               Please upgrade to at least 10.3.1.~%  ~
               Sorry for the inconvenience.~%~%"
-             (lisp-implementation-version)))))
+           (lisp-implementation-version))))
 
 ;; Hard dependencies.
 (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -38,13 +44,15 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (import-from :gray *gray-stream-symbols* :swank-backend)
-
-  (import-swank-mop-symbols :clos
-    '(:eql-specializer
-      :eql-specializer-object
-      :generic-function-declarations
-      :specializer-direct-methods
-      :compute-applicable-methods-using-classes)))
+  (import-swank-mop-symbols
+   :clos
+   (and (< (ecl-version) 121201)
+        `(:eql-specializer
+          :eql-specializer-object
+          :generic-function-declarations
+          :specializer-direct-methods
+          ,@(unless (fboundp 'clos:compute-applicable-methods-using-classes)
+              '(:compute-applicable-methods-using-classes))))))
 
 
 ;;;; TCP Server
@@ -87,7 +95,10 @@
                                      :buffering (ecase buffering
                                                   ((t) :full)
                                                   ((nil) :none)
-                                                  (:line line))
+                                                  (:line :line))
+                                     :element-type (if external-format
+                                                       'character 
+                                                       '(unsigned-byte 8))
                                      :external-format external-format))
 (defun accept (socket)
   "Like socket-accept, but retry on EAGAIN."
@@ -199,6 +210,17 @@
 
 ) ; #+serve-event (progn ...
 
+#-serve-event
+(defimplementation wait-for-input (streams &optional timeout)
+  (assert (member timeout '(nil t)))
+  (loop
+   (cond ((check-slime-interrupts) (return :interrupt))
+         (timeout (return (remove-if-not #'listen streams)))
+         (t
+          (let ((ready (remove-if-not #'listen streams)))
+            (if ready (return ready))
+            (sleep 0.1))))))
+
 
 ;;;; Compilation
 
@@ -206,7 +228,7 @@
 (defvar *buffer-start-position*)
 
 (defun signal-compiler-condition (&rest args)
-  (signal (apply #'make-condition 'compiler-condition args)))
+  (apply #'signal 'compiler-condition args))
 
 #-ecl-bytecmp
 (defun handle-compiler-message (condition)
@@ -237,7 +259,7 @@
         (make-error-location "No location found."))))
 
 (defimplementation call-with-compilation-hooks (function)
-  #-ecl-bytecmp
+  #+ecl-bytecmp
   (funcall function)
   #-ecl-bytecmp
   (handler-bind ((c:compiler-message #'handle-compiler-message))
@@ -307,9 +329,13 @@
 
 (defimplementation describe-symbol-for-emacs (symbol)
   (let ((result '()))
-    (dolist (type '(:VARIABLE :FUNCTION :CLASS))
-      (when-let (doc (describe-definition symbol type))
-        (setf result (list* type doc result))))
+    (flet ((frob (type boundp)
+             (when (funcall boundp symbol)
+               (let ((doc (describe-definition symbol type)))
+                 (setf result (list* type doc result))))))
+      (frob :VARIABLE #'boundp)
+      (frob :FUNCTION #'fboundp)
+      (frob :CLASS (lambda (x) (find-class x nil))))
     result))
 
 (defimplementation describe-definition (name type)
@@ -318,6 +344,10 @@
     (:function (documentation name 'function))
     (:class (documentation name 'class))
     (t nil)))
+
+(defimplementation type-specifier-p (symbol)
+  (or (subtypep nil symbol)
+      (not (eq (type-specifier-arglist symbol) :not-available))))
 
 
 ;;; Debugging
@@ -473,13 +503,17 @@
   (third (elt *backtrace* frame-number)))
 
 (defimplementation frame-locals (frame-number)
-  (loop for (name . value) in (nth-value 2 (frame-decode-env (elt *backtrace* frame-number)))
-        with i = 0
-        collect (list :name name :id (prog1 i (incf i)) :value value)))
+  (loop for (name . value) in (nth-value 2 (frame-decode-env
+                                            (elt *backtrace* frame-number)))
+        collect (list :name name :id 0 :value value)))
 
-(defimplementation frame-var-value (frame-number var-id)
-  (elt (nth-value 2 (frame-decode-env (elt *backtrace* frame-number)))
-       var-id))
+(defimplementation frame-var-value (frame-number var-number)
+  (destructuring-bind (name . value)
+      (elt
+       (nth-value 2 (frame-decode-env (elt *backtrace* frame-number)))
+       var-number)
+    (declare (ignore name))
+    value))
 
 (defimplementation disassemble-frame (frame-number)
   (let ((fun (frame-function (elt *backtrace* frame-number))))
@@ -732,7 +766,7 @@
         "STOPPED"))
 
   (defimplementation make-lock (&key name)
-    (mp:make-lock :name name))
+    (mp:make-lock :name name :recursive t))
 
   (defimplementation call-with-lock-held (lock function)
     (declare (type function function))
