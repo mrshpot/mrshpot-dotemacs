@@ -214,6 +214,11 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-to-list 'auto-mode-alist '("\\.\\(?:[gh]s\\|hi\\)\\'" . haskell-mode))
 
+;; Eiffel
+(add-to-list 'auto-mode-alist '("\\.e\\'" . eiffel-mode))
+(autoload 'eiffel-mode "eiffel" "Major mode for Eiffel programs" t)
+
+
 ;; PHP
 (autoload 'php-mode "php-mode.el" "PHP mode." t)
 (add-to-list 'auto-mode-alist '("/*.\.php[345]?$" . php-mode))
