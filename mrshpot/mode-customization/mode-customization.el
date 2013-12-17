@@ -178,6 +178,7 @@
 
 ;; UUID
 (require 'uuid)
+(setq uuid-suppress-network-info-warnings t)
 
 ;; SLIME
 (load "my-slime.el")
